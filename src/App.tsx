@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'motion/react';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, useScroll, useTransform } from 'motion/react';
 import { 
   Clock, UserX, Target, ChevronDown, Timer, 
   Check, Minus, Laptop, Users, Info, 
-  MousePointer2, Zap, Palette, Rocket, Star
+  MousePointer2, Zap, Palette, Rocket, Star, Eye, X, Linkedin, MessageCircle, Mail
 } from 'lucide-react';
 
 function CreateProposal() {
@@ -15,6 +15,7 @@ function CreateProposal() {
   const [color2, setColor2] = useState('#4ade80');
   const [color3, setColor3] = useState('#ffffff');
   const [generatedUrl, setGeneratedUrl] = useState('');
+  const [showPreview, setShowPreview] = useState(false);
 
   const handleGenerate = () => {
     const data = { img1, img2, text, companyName, color1, color2, color3 };
@@ -25,96 +26,378 @@ function CreateProposal() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-6 font-sans">
-      <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-lg my-8">
-        <h2 className="text-2xl font-bold mb-6 text-brand-primary">Crear Propuesta Personalizada</h2>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Nombre de la Empresa</label>
-            <input 
-              type="text" 
-              className="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-brand-accent outline-none"
-              value={companyName} 
-              onChange={e => setCompanyName(e.target.value)} 
-              placeholder="Ej. Atenea Growth"
-            />
+      <div className="bg-white p-8 md:p-10 rounded-3xl shadow-2xl w-full max-w-2xl my-8 border border-gray-100">
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-brand-primary/5 mb-4">
+            <Rocket className="w-8 h-8 text-brand-primary" />
           </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">URL Imagen 1</label>
-            <input 
-              type="text" 
-              className="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-brand-accent outline-none"
-              value={img1} 
-              onChange={e => setImg1(e.target.value)} 
-              placeholder="https://ejemplo.com/imagen1.jpg"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">URL Imagen 2</label>
-            <input 
-              type="text" 
-              className="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-brand-accent outline-none"
-              value={img2} 
-              onChange={e => setImg2(e.target.value)} 
-              placeholder="https://ejemplo.com/imagen2.jpg"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Frase / Texto</label>
-            <textarea 
-              className="w-full border border-gray-300 rounded-lg p-2 h-24 focus:ring-2 focus:ring-brand-accent outline-none"
-              value={text} 
-              onChange={e => setText(e.target.value)} 
-              placeholder="Escribe la frase aquí..."
-            />
-          </div>
-          <div className="grid grid-cols-3 gap-4">
+          <h2 className="text-3xl font-black text-brand-primary tracking-tight">Crear Propuesta</h2>
+          <p className="text-gray-500 mt-2">Personaliza la experiencia para tu cliente</p>
+        </div>
+
+        <div className="space-y-6">
+          <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100 space-y-4">
+            <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider flex items-center gap-2">
+              <Users className="w-4 h-4 text-brand-accent" />
+              Datos del Cliente
+            </h3>
             <div>
-              <label className="block text-xs font-medium text-gray-700 mb-1">Color Principal (Oscuro)</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1.5">Nombre de la Empresa</label>
               <input 
-                type="color" 
-                className="w-full h-10 border border-gray-300 rounded-lg cursor-pointer"
-                value={color1} 
-                onChange={e => setColor1(e.target.value)} 
+                type="text" 
+                className="w-full border border-gray-200 rounded-xl p-3 focus:ring-2 focus:ring-brand-accent focus:border-brand-accent outline-none transition-all bg-white"
+                value={companyName} 
+                onChange={e => setCompanyName(e.target.value)} 
+                placeholder="Ej. Atenea Growth"
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-gray-700 mb-1">Color Acento (Brillante)</label>
-              <input 
-                type="color" 
-                className="w-full h-10 border border-gray-300 rounded-lg cursor-pointer"
-                value={color2} 
-                onChange={e => setColor2(e.target.value)} 
-              />
-            </div>
-            <div>
-              <label className="block text-xs font-medium text-gray-700 mb-1">Color Secundario (Claro)</label>
-              <input 
-                type="color" 
-                className="w-full h-10 border border-gray-300 rounded-lg cursor-pointer"
-                value={color3} 
-                onChange={e => setColor3(e.target.value)} 
+              <label className="block text-sm font-medium text-gray-700 mb-1.5">Frase / Texto Personalizado</label>
+              <textarea 
+                className="w-full border border-gray-200 rounded-xl p-3 h-24 focus:ring-2 focus:ring-brand-accent focus:border-brand-accent outline-none transition-all bg-white resize-none"
+                value={text} 
+                onChange={e => setText(e.target.value)} 
+                placeholder="Escribe un mensaje inspirador para tu cliente..."
               />
             </div>
           </div>
+
+          <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100 space-y-4">
+            <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider flex items-center gap-2">
+              <Palette className="w-4 h-4 text-brand-accent" />
+              Identidad Visual
+            </h3>
+            <div className="grid grid-cols-3 gap-4">
+              <div className="space-y-2">
+                <label className="block text-xs font-medium text-gray-600 text-center">Principal</label>
+                <div className="relative rounded-xl overflow-hidden border-2 border-gray-200 hover:border-brand-accent transition-colors">
+                  <input 
+                    type="color" 
+                    className="w-full h-12 cursor-pointer opacity-0 absolute inset-0 z-10"
+                    value={color1} 
+                    onChange={e => setColor1(e.target.value)} 
+                  />
+                  <div className="w-full h-12 flex items-center justify-center" style={{ backgroundColor: color1 }}>
+                    <span className="text-xs font-mono bg-white/80 px-2 py-1 rounded text-gray-900 shadow-sm">{color1}</span>
+                  </div>
+                </div>
+              </div>
+              <div className="space-y-2">
+                <label className="block text-xs font-medium text-gray-600 text-center">Acento</label>
+                <div className="relative rounded-xl overflow-hidden border-2 border-gray-200 hover:border-brand-accent transition-colors">
+                  <input 
+                    type="color" 
+                    className="w-full h-12 cursor-pointer opacity-0 absolute inset-0 z-10"
+                    value={color2} 
+                    onChange={e => setColor2(e.target.value)} 
+                  />
+                  <div className="w-full h-12 flex items-center justify-center" style={{ backgroundColor: color2 }}>
+                    <span className="text-xs font-mono bg-white/80 px-2 py-1 rounded text-gray-900 shadow-sm">{color2}</span>
+                  </div>
+                </div>
+              </div>
+              <div className="space-y-2">
+                <label className="block text-xs font-medium text-gray-600 text-center">Fondo</label>
+                <div className="relative rounded-xl overflow-hidden border-2 border-gray-200 hover:border-brand-accent transition-colors">
+                  <input 
+                    type="color" 
+                    className="w-full h-12 cursor-pointer opacity-0 absolute inset-0 z-10"
+                    value={color3} 
+                    onChange={e => setColor3(e.target.value)} 
+                  />
+                  <div className="w-full h-12 flex items-center justify-center" style={{ backgroundColor: color3 }}>
+                    <span className="text-xs font-mono bg-black/10 px-2 py-1 rounded text-gray-900 shadow-sm">{color3}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="space-y-4 pt-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1.5">URL Imagen 1 (Opcional)</label>
+                <input 
+                  type="text" 
+                  className="w-full border border-gray-200 rounded-xl p-3 focus:ring-2 focus:ring-brand-accent focus:border-brand-accent outline-none transition-all bg-white"
+                  value={img1} 
+                  onChange={e => setImg1(e.target.value)} 
+                  placeholder="https://ejemplo.com/imagen1.jpg"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1.5">URL Imagen 2 (Opcional)</label>
+                <input 
+                  type="text" 
+                  className="w-full border border-gray-200 rounded-xl p-3 focus:ring-2 focus:ring-brand-accent focus:border-brand-accent outline-none transition-all bg-white"
+                  value={img2} 
+                  onChange={e => setImg2(e.target.value)} 
+                  placeholder="https://ejemplo.com/imagen2.jpg"
+                />
+              </div>
+            </div>
+          </div>
+
           <button 
             onClick={handleGenerate}
-            className="w-full bg-brand-accent text-brand-primary font-bold py-3 rounded-lg hover:opacity-90 transition-opacity mt-4"
+            className="w-full bg-brand-primary text-white font-bold py-4 rounded-xl hover:bg-brand-primary/90 transition-all mt-6 shadow-lg shadow-brand-primary/20 flex items-center justify-center gap-2"
           >
-            Generar URL
+            <Zap className="w-5 h-5 text-brand-accent" />
+            Generar Enlace Mágico
           </button>
           
           {generatedUrl && (
-            <div className="mt-6 p-4 bg-gray-100 rounded-lg break-all">
-              <p className="text-sm text-gray-600 mb-2 font-bold">URL Generada:</p>
-              <a href={generatedUrl} target="_blank" rel="noreferrer" className="text-blue-600 font-medium hover:underline text-sm">
-                {generatedUrl}
-              </a>
-            </div>
+            <motion.div 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-6 p-5 bg-emerald-50 border border-emerald-100 rounded-xl break-all"
+            >
+              <div className="flex items-center gap-2 mb-4">
+                <Check className="w-5 h-5 text-emerald-500" />
+                <p className="text-sm text-emerald-800 font-bold">¡Propuesta lista!</p>
+              </div>
+              <div className="flex flex-col gap-3">
+                <a href={generatedUrl} target="_blank" rel="noreferrer" className="text-emerald-600 font-medium hover:underline text-sm block p-3 bg-white rounded-lg border border-emerald-100 shadow-sm">
+                  {generatedUrl}
+                </a>
+                <button 
+                  onClick={() => setShowPreview(true)}
+                  className="w-full bg-emerald-600 text-white font-bold py-3 rounded-lg hover:bg-emerald-700 transition-all shadow-md flex items-center justify-center gap-2"
+                >
+                  <Eye className="w-5 h-5" />
+                  Previsualizar Propuesta
+                </button>
+              </div>
+            </motion.div>
           )}
         </div>
-        <div className="mt-8 text-center">
-          <a href="#" className="text-sm text-gray-500 hover:text-gray-800 hover:underline">Volver a la propuesta principal</a>
+        <div className="mt-8 text-center border-t border-gray-100 pt-6">
+          <a href="#" className="text-sm text-gray-500 hover:text-brand-primary font-medium transition-colors">Volver a la vista previa</a>
         </div>
+      </div>
+
+      {showPreview && (
+        <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4 md:p-8 backdrop-blur-sm">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-white w-full max-w-7xl h-full max-h-[90vh] rounded-2xl overflow-hidden flex flex-col shadow-2xl"
+          >
+            <div className="p-4 border-b flex justify-between items-center bg-gray-50">
+              <h3 className="font-bold text-gray-800 flex items-center gap-2">
+                <Eye className="w-5 h-5 text-brand-primary" />
+                Previsualización de la Propuesta
+              </h3>
+              <button 
+                onClick={() => setShowPreview(false)} 
+                className="p-2 hover:bg-gray-200 rounded-full transition-colors"
+              >
+                <X className="w-5 h-5 text-gray-600" />
+              </button>
+            </div>
+            <iframe 
+              src={generatedUrl} 
+              className="w-full flex-1 border-none bg-gray-100" 
+              title="Previsualización"
+            />
+          </motion.div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function VisionCompartidaSection({ customData }: { customData: any }) {
+  const visionSectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: visionSectionRef,
+    offset: ["start end", "end start"]
+  });
+  
+  // Circle 1 (Top Right) moves down and left towards center
+  const circle1Y = useTransform(scrollYProgress, [0, 1], [-100, 300]);
+  const circle1X = useTransform(scrollYProgress, [0, 1], [100, -300]);
+  
+  // Circle 2 (Bottom Left) moves up and right towards center
+  const circle2Y = useTransform(scrollYProgress, [0, 1], [100, -300]);
+  const circle2X = useTransform(scrollYProgress, [0, 1], [-100, 300]);
+
+  return (
+    <section 
+      id="vision-compartida"
+      ref={visionSectionRef}
+      className="relative w-full py-24 md:py-32 overflow-hidden border-b border-gray-100 bg-brand-secondary"
+    >
+      {/* Defined color circle accents using client colors */}
+      <motion.div 
+        className="absolute -top-16 -right-16 w-[450px] h-[450px] sm:w-[550px] sm:h-[550px] md:w-[750px] md:h-[750px] rounded-full pointer-events-none shadow-2xl" 
+        style={{ 
+          backgroundColor: customData.color2 || 'var(--theme-accent)',
+          y: circle1Y,
+          x: circle1X
+        }}
+      />
+      <motion.div 
+        className="absolute -bottom-16 -left-16 w-[450px] h-[450px] sm:w-[550px] sm:h-[550px] md:w-[750px] md:h-[750px] rounded-full pointer-events-none shadow-2xl" 
+        style={{ 
+          backgroundColor: customData.color1 || 'var(--theme-primary)',
+          y: circle2Y,
+          x: circle2X
+        }}
+      />
+      
+      <div className="container mx-auto px-6 md:px-20 lg:px-32 max-w-5xl relative z-10 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="flex flex-col items-center space-y-10"
+        >
+          <div 
+            className="inline-block px-6 py-2 rounded-full font-bold text-sm uppercase tracking-[0.2em] shadow-sm bg-black text-[#4ade80]"
+          >
+            Visión Compartida
+          </div>
+          
+          <h2 
+            className="text-5xl sm:text-6xl md:text-8xl font-black uppercase tracking-tighter leading-none"
+            style={{ color: customData.color1 || 'var(--theme-primary)' }}
+          >
+            {customData.companyName || 'Tu Empresa'}
+          </h2>
+          
+          {customData.text && (
+            <div className="relative max-w-3xl mx-auto">
+              <p 
+                className="text-2xl md:text-4xl font-light leading-tight italic opacity-90"
+                style={{ color: customData.color1 || 'var(--theme-primary)' }}
+              >
+                "{customData.text}"
+              </p>
+              <div 
+                className="w-24 h-1 mx-auto mt-8 rounded-full"
+                style={{ backgroundColor: customData.color2 || 'var(--theme-accent)' }}
+              />
+            </div>
+          )}
+
+          {customData.img1 && (
+            <div className="pt-4">
+              <img 
+                src={customData.img1} 
+                alt="Logo Cliente" 
+                className="h-20 md:h-32 w-auto object-contain mx-auto"
+                referrerPolicy="no-referrer"
+              />
+            </div>
+          )}
+
+          {customData.img2 && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="relative w-full max-w-2xl mx-auto mt-12"
+            >
+              <div 
+                className="absolute inset-0 transform rotate-2 rounded-[3rem] opacity-10" 
+                style={{ backgroundColor: customData.color2 || 'var(--theme-accent)' }}
+              />
+              <div className="relative rounded-[3rem] overflow-hidden shadow-2xl border-4 border-white bg-white p-2">
+                <img 
+                  src={customData.img2} 
+                  alt="Empresa" 
+                  className="w-full h-auto object-cover aspect-video rounded-[2.5rem]"
+                  referrerPolicy="no-referrer"
+                />
+              </div>
+            </motion.div>
+          )}
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+interface CurtainRevealProps {
+  children: React.ReactNode;
+  footer: React.ReactNode;
+  containerClassName?: string;
+  footerClassName?: string;
+}
+
+const CurtainReveal: React.FC<CurtainRevealProps> = ({ 
+  children, 
+  footer, 
+  containerClassName,
+  footerClassName 
+}) => {
+  return (
+    <div className="relative">
+      {/* Contenido principal (La "Cortina") */}
+      <div className={`reveal-container ${containerClassName || ''}`}>
+        {children}
+      </div>
+
+      {/* Contenido revelado (El "Fondo") */}
+      <div className={`reveal-footer ${footerClassName || ''}`}>
+        {footer}
+      </div>
+    </div>
+  );
+};
+
+function ContactCTA() {
+  return (
+    <div className="w-full max-w-4xl mx-auto px-6 py-20 bg-white text-center">
+      <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-brand-primary mb-8">
+        Hablemos
+      </h2>
+      
+      <div className="flex justify-center gap-6 mb-12">
+        <a href="#" className="p-4 bg-gray-50 rounded-full hover:bg-brand-accent hover:text-white transition-colors text-brand-primary">
+          <Linkedin className="w-8 h-8" />
+        </a>
+        <a href="#" className="p-4 bg-gray-50 rounded-full hover:bg-brand-accent hover:text-white transition-colors text-brand-primary">
+          <MessageCircle className="w-8 h-8" />
+        </a>
+        <a href="#" className="p-4 bg-gray-50 rounded-full hover:bg-brand-accent hover:text-white transition-colors text-brand-primary">
+          <Mail className="w-8 h-8" />
+        </a>
+      </div>
+
+      <form className="max-w-md mx-auto space-y-4 text-left">
+        <div>
+          <label className="block text-sm font-bold text-gray-700 mb-1">Nombre de la empresa</label>
+          <input 
+            type="text" 
+            className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-accent focus:border-transparent"
+            placeholder="Ej. Acme Corp"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-bold text-gray-700 mb-1">Mensaje</label>
+          <textarea 
+            rows={4}
+            className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-accent focus:border-transparent resize-none"
+            placeholder="¿En qué podemos ayudarte?"
+          />
+        </div>
+        <button 
+          type="button"
+          className="w-full py-4 bg-brand-primary text-white font-bold rounded-xl hover:bg-brand-primary/90 transition-colors uppercase tracking-wider text-sm"
+        >
+          Enviar Mensaje
+        </button>
+      </form>
+
+      {/* Logo Atenea Footer */}
+      <div className="mt-20 flex justify-center">
+        <a href="#/create" className="inline-block transition-transform hover:scale-105">
+          <img 
+            src="https://raw.githubusercontent.com/andr3sb3nv3/AteneaPNG/refs/heads/main/IMG_0184.png" 
+            alt="Logo Atenea" 
+            className="h-16 md:h-20 w-auto object-contain opacity-80 hover:opacity-100 transition-opacity cursor-pointer"
+          />
+        </a>
       </div>
     </div>
   );
@@ -122,6 +405,7 @@ function CreateProposal() {
 
 export default function App() {
   const [selectedPlan, setSelectedPlan] = useState<string>('patagon');
+  const [selectedAllianceTab, setSelectedAllianceTab] = useState<string>('atenea');
   const [route, setRoute] = useState(window.location.hash);
 
   useEffect(() => {
@@ -130,25 +414,29 @@ export default function App() {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
+  const customData = React.useMemo(() => {
+    if (route.startsWith('#/p/')) {
+      try {
+        const base64 = route.replace('#/p/', '');
+        return JSON.parse(decodeURIComponent(atob(base64)));
+      } catch (e) {
+        console.error("Invalid custom data in URL");
+      }
+    }
+    return null;
+  }, [route]);
+
+  const customStyles = React.useMemo(() => {
+    return customData ? {
+      '--theme-primary': customData.color1 || '#0a192f',
+      '--theme-accent': customData.color2 || '#4ade80',
+      '--theme-secondary': customData.color3 || '#ffffff',
+    } as React.CSSProperties : {};
+  }, [customData]);
+
   if (route === '#/create') {
     return <CreateProposal />;
   }
-
-  let customData: { img1?: string, img2?: string, text?: string, companyName?: string, color1?: string, color2?: string, color3?: string } | null = null;
-  if (route.startsWith('#/p/')) {
-    try {
-      const base64 = route.replace('#/p/', '');
-      customData = JSON.parse(decodeURIComponent(atob(base64)));
-    } catch (e) {
-      console.error("Invalid custom data in URL");
-    }
-  }
-
-  const customStyles = customData ? {
-    '--theme-primary': customData.color1 || '#0a192f',
-    '--theme-accent': customData.color2 || '#4ade80',
-    '--theme-secondary': customData.color3 || '#ffffff',
-  } as React.CSSProperties : {};
 
   const images = {
     img0095: "https://raw.githubusercontent.com/andr3sb3nv3/Banco-de-im-genes-Atenea/refs/heads/main/IMG_0095.jpeg",
@@ -226,7 +514,7 @@ export default function App() {
   const ateneaPoints = [
     "Generamos tráfico de calidad desde Google, Meta y LinkedIn",
     "Segmentamos y optimizamos para lead calificado",
-    "Diseñamos creatividades y mensajes para proyectos inmobiliarios",
+    `Diseñamos creatividades y mensajes para ${customData?.companyName || 'proyectos inmobiliarios'}`,
     "Optimizamos de forma continua con reporting claro",
     "Aportamos expertise real en vertical inmobiliaria"
   ];
@@ -237,6 +525,37 @@ export default function App() {
     "Optimizamos las campañas en base a las que performan mejor",
     "Agendamos visitas y reuniones automáticamente",
     "Incrementamos la conversión entre 30-400%"
+  ];
+
+  const allianceRoles = [
+    {
+      id: 'atenea',
+      label: 'Rol de Atenea',
+      title: 'CAPTACIÓN + PERFORMANCE',
+      description: 'ATENEA GENERA Y ESCALA LA DEMANDA',
+      logo: 'https://raw.githubusercontent.com/andr3sb3nv3/Banco-de-im-genes-Atenea/refs/heads/main/IMG_0184.png',
+      features: [
+        'Generamos tráfico de calidad desde Google, Meta y Linkedin',
+        'Segmentamos y optimizamos para lead calificado',
+        'Diseñamos creatividades y mensajes para proyectos inmobiliarios',
+        'Optimizamos de forma continua con reporting claro',
+        'Aportamos expertise real en vertical inmobiliaria'
+      ]
+    },
+    {
+      id: 'patagon',
+      label: 'Rol de Patagon',
+      title: 'CONVERSIÓN + CALIFICACIÓN 24/7',
+      description: 'PATAGON CONVIERTE ESA DEMANDA EN OPORTUNIDADES REALES',
+      logo: 'https://s.yimg.com/ny/api/res/1.2/P6UWQz6rwjfMH0Fq2E8UMg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTM2MA--/https://media.zenfs.com/es/valora_628/eee9853c1556a5bf4e9c3f9a287e29e6',
+      features: [
+        'Respondemos de forma inmediata 24/7',
+        'Conversamos de manera natural y contextualizada',
+        'Optimizamos las campañas en base a las que performan mejor',
+        'Agendamos visitas y reuniones automáticamente',
+        'Incrementamos la conversión entre 30-400%'
+      ]
+    }
   ];
 
   const results = [
@@ -273,20 +592,23 @@ export default function App() {
   };
 
   return (
-    <div style={customStyles} className="w-full min-h-screen bg-brand-secondary font-sans text-brand-primary overflow-x-hidden">
-      
-      {/* SECCIÓN: IMAGEN DE FONDO (CARÁTULA) */}
-      <section className="relative w-full flex items-center overflow-hidden">
+    <CurtainReveal
+      footer={<ContactCTA />}
+      footerClassName="bg-white"
+    >
+      <div style={customStyles} className="w-full min-h-screen bg-brand-secondary font-sans text-brand-primary">
+        
+        {/* SECCIÓN: IMAGEN DE FONDO (CARÁTULA) */}
+      <section className="relative w-full h-screen flex items-center overflow-hidden">
         <img 
-          src={images.img0121} 
+          src="https://raw.githubusercontent.com/andr3sb3nv3/Banco-de-im-genes-Atenea/refs/heads/main/ffffff.drawio.png" 
           alt="Fondo" 
-          className="w-full h-auto block"
+          className="absolute inset-0 w-full h-full object-cover saturate-150 contrast-125 brightness-110"
         />
         <div className="absolute inset-0 z-10 container mx-auto px-6 md:px-20 lg:px-32 flex flex-col justify-center">
           <motion.div 
             initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: "easeOut" }}
           >
             <h1 className="text-white text-5xl sm:text-6xl md:text-9xl font-bold leading-[1.1] tracking-tight uppercase drop-shadow-xl">
@@ -305,75 +627,38 @@ export default function App() {
             </p>
           </motion.div>
         </div>
-      </section>
 
-      {/* SECCIÓN PERSONALIZADA (Si existe) */}
-      {customData && (customData.img1 || customData.img2 || customData.text) && (
-        <section className="relative w-full bg-gradient-to-b from-white to-gray-50 py-24 md:py-32 overflow-hidden border-b border-gray-100">
-          {/* Decorative background elements */}
-          <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-brand-accent/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-brand-accent/10 rounded-full blur-3xl translate-y-1/3 -translate-x-1/3 pointer-events-none" />
-          
-          <div className="container mx-auto px-6 md:px-20 lg:px-32 max-w-7xl relative z-10">
-            
+        {/* Scroll Indicator */}
+        <motion.div 
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-3"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1, duration: 1 }}
+        >
+          <span className="text-white text-xs uppercase tracking-[0.3em] font-bold drop-shadow-md">Scroll</span>
+          <div className="w-[1px] h-16 bg-white/30 relative overflow-hidden">
             <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center mb-16 md:mb-24"
-            >
-              <div className="inline-block bg-brand-accent text-brand-primary px-6 py-2 rounded-full font-bold text-sm uppercase tracking-[0.2em] mb-6 shadow-lg shadow-brand-accent/30">
-                Visión Compartida
-              </div>
-              <h2 className="text-4xl sm:text-5xl md:text-7xl font-black text-brand-primary uppercase tracking-tighter leading-none mb-8">
-                Por qué creemos en el <br className="hidden md:block" />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-primary to-brand-accent">potencial de tu negocio</span>
-              </h2>
-              
-              {customData.text && (
-                <div className="relative max-w-5xl mx-auto mt-16">
-                  <div className="absolute inset-0 bg-brand-accent transform rotate-1 rounded-3xl opacity-20"></div>
-                  <div className="relative p-8 md:p-16 bg-brand-secondary rounded-3xl shadow-2xl border border-gray-100 transform -rotate-1 transition-transform hover:rotate-0 duration-500">
-                    <div className="absolute -top-6 -left-6 md:-top-8 md:-left-8 text-brand-accent opacity-40">
-                      <svg width="80" height="80" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" className="w-16 h-16 md:w-24 md:h-24">
-                        <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                      </svg>
-                    </div>
-                    <p className="text-2xl sm:text-4xl md:text-6xl font-black text-brand-primary uppercase tracking-tighter leading-[1.1] relative z-10 italic">
-                      "{customData.text}"
-                    </p>
-                  </div>
-                </div>
-              )}
-            </motion.div>
-
-            <div className={`grid grid-cols-1 ${customData.img1 && customData.img2 ? 'md:grid-cols-2' : 'max-w-4xl mx-auto'} gap-8 md:gap-12`}>
-              {customData.img1 && (
-                <motion.div 
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.2 }}
-                  className="rounded-3xl overflow-hidden shadow-2xl border-8 border-brand-secondary bg-brand-secondary flex items-center justify-center hover:border-brand-accent transition-colors duration-500 group"
-                >
-                  <img src={customData.img1} alt="Visión 1" className="w-full h-auto object-contain max-h-[700px] group-hover:scale-[1.02] transition-transform duration-700" />
-                </motion.div>
-              )}
-              {customData.img2 && (
-                <motion.div 
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.4 }}
-                  className="rounded-3xl overflow-hidden shadow-2xl border-8 border-brand-secondary bg-brand-secondary flex items-center justify-center hover:border-brand-accent transition-colors duration-500 group"
-                >
-                  <img src={customData.img2} alt="Visión 2" className="w-full h-auto object-contain max-h-[700px] group-hover:scale-[1.02] transition-transform duration-700" />
-                </motion.div>
-              )}
-            </div>
+              className="w-full h-1/2 bg-white absolute top-0"
+              animate={{ top: ['-50%', '100%'] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+            />
           </div>
-        </section>
-      )}
+        </motion.div>
+
+        {/* Bottom Right Logo */}
+        <motion.div
+          className="absolute bottom-6 right-6 md:bottom-10 md:right-10 z-20"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.5, duration: 0.8 }}
+        >
+          <img 
+            src="https://raw.githubusercontent.com/andr3sb3nv3/Banco-de-im-genes-Atenea/refs/heads/main/IMG_0184.png" 
+            alt="Logo Atenea" 
+            className="h-24 md:h-32 w-auto object-contain"
+          />
+        </motion.div>
+      </section>
 
       {/* SECCIONES DE IMAGEN */}
       <motion.section 
@@ -408,6 +693,9 @@ export default function App() {
           </div>
         </div>
       </motion.section>
+
+      {/* SECCIÓN: VISIÓN COMPARTIDA */}
+      {customData && <VisionCompartidaSection customData={customData} />}
 
       {/* SECCIÓN 2: EL CONTEXTO */}
       <section className="relative w-full min-h-screen bg-brand-secondary py-20 md:py-24 flex flex-col justify-center border-b border-gray-100">
@@ -447,10 +735,96 @@ export default function App() {
             <motion.div variants={fadeInUp} className="flex flex-col md:flex-row items-start space-y-4 md:space-y-0 md:space-x-10">
               <div className="bg-gray-100 p-4 md:p-5 rounded-2xl flex-shrink-0"><Target className="w-10 h-10 md:w-12 md:h-12 text-gray-700" /></div>
               <div className="flex-1 text-lg sm:text-xl md:text-3xl text-gray-700 leading-relaxed uppercase tracking-tight font-bold">
-                <p>Las inmobiliarias necesitan: velocidad + calificación real + CRM actualizado en tiempo real para no perder oportunidades.</p>
+                <p>{customData?.companyName ? `${customData.companyName} necesita` : 'Las inmobiliarias necesitan'}: velocidad + calificación real + CRM actualizado en tiempo real para no perder oportunidades.</p>
               </div>
             </motion.div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* SECCIÓN: ALIANZA CON PATAGON */}
+      <section className="relative w-full bg-brand-primary py-20 md:py-32 overflow-hidden border-b border-white/5">
+        <div className="container mx-auto px-6 md:px-20 lg:px-32 max-w-7xl relative z-10">
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+            className="text-center mb-16 md:mb-24"
+          >
+            <h2 className="text-4xl sm:text-5xl md:text-7xl font-black text-white uppercase tracking-tighter leading-none mb-8 italic">
+              Alianza con <span className="text-brand-accent">Patagon</span>
+            </h2>
+          </motion.div>
+
+          <div className={`border border-white/10 rounded-[2rem] md:rounded-[3rem] p-6 sm:p-8 md:p-16 shadow-2xl relative overflow-hidden backdrop-blur-sm transition-all duration-500 ${selectedAllianceTab === 'patagon' ? 'bg-[#edd5b1]' : 'bg-white/5'}`}>
+            {/* Tab Selector */}
+            <div className="flex justify-center mb-12 w-full overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+              <div className={`${selectedAllianceTab === 'patagon' ? 'bg-black/5 border-black/10' : 'bg-white/5 border-white/10'} p-1.5 rounded-full border flex flex-row gap-1 md:gap-2 relative min-w-max transition-colors duration-500`}>
+                {allianceRoles.map((role) => (
+                  <button
+                    key={role.id}
+                    onClick={() => setSelectedAllianceTab(role.id)}
+                    className={`relative px-4 py-2.5 md:px-10 md:py-4 rounded-full text-[10px] sm:text-xs md:text-sm font-bold uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-1.5 md:gap-2 whitespace-nowrap ${
+                      selectedAllianceTab === role.id
+                        ? 'bg-brand-accent text-brand-primary shadow-[0_0_20px_rgba(74,222,128,0.3)]'
+                        : selectedAllianceTab === 'patagon' ? 'text-black/60 hover:text-black hover:bg-black/5' : 'text-slate-400 hover:text-white hover:bg-white/5'
+                    }`}
+                  >
+                    {role.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="max-w-4xl mx-auto">
+              {allianceRoles.map((role) => (
+                selectedAllianceTab === role.id && (
+                  <motion.div
+                    key={role.id}
+                    initial={{ opacity: 0, x: role.id === 'atenea' ? -20 : 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center"
+                  >
+                    <div className="space-y-8">
+                      <div className="space-y-6">
+                        <h3 className={`text-3xl md:text-4xl font-black uppercase italic tracking-tighter leading-none transition-colors duration-500 ${selectedAllianceTab === 'patagon' ? 'text-black' : 'text-white'}`}>
+                          {role.title}
+                        </h3>
+                        <p className={`text-lg font-bold uppercase tracking-wide transition-colors duration-500 ${selectedAllianceTab === 'patagon' ? 'text-black/80' : 'text-brand-accent'}`}>
+                          {role.description}
+                        </p>
+                        <ul className="space-y-4">
+                          {role.features.map((feature, idx) => (
+                            <li key={idx} className={`flex items-start gap-3 text-sm md:text-base font-light uppercase tracking-tight transition-colors duration-500 ${selectedAllianceTab === 'patagon' ? 'text-black/70' : 'text-slate-300'}`}>
+                              <Check className={`${selectedAllianceTab === 'patagon' ? 'text-black' : 'text-brand-accent'} w-5 h-5 mt-0.5 flex-shrink-0 transition-colors duration-500`} />
+                              {feature}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      {role.logo && (
+                        <div className="pt-4 flex justify-center">
+                          <img 
+                            src={role.logo} 
+                            alt={`${role.id} Logo`} 
+                            className="w-1/4 md:w-1/3 h-auto object-contain hover:scale-110 transition-transform duration-700 relative z-10"
+                            referrerPolicy="no-referrer"
+                          />
+                        </div>
+                      )}
+                    </div>
+                    {role.id === 'patagon' && (
+                      <div className="hidden md:flex items-center justify-center">
+                        <Zap className="w-32 h-32 md:w-48 md:h-48 text-black opacity-10" />
+                      </div>
+                    )}
+                  </motion.div>
+                )
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
@@ -461,7 +835,7 @@ export default function App() {
         transition={{ duration: 1 }}
         className="w-full"
       >
-        <img src={images.img0122} alt="Slide 122" className="w-full h-auto object-cover" />
+        <img src="https://raw.githubusercontent.com/andr3sb3nv3/Banco-de-im-genes-Atenea/refs/heads/main/IMG_0202.jpeg" alt="Slide 202" className="w-full h-auto object-cover" />
       </motion.section>
 
       <motion.section 
@@ -471,7 +845,7 @@ export default function App() {
         transition={{ duration: 1 }}
         className="w-full"
       >
-        <img src={images.img0123} alt="Slide 123" className="w-full h-auto object-cover" />
+        <img src="https://raw.githubusercontent.com/andr3sb3nv3/Banco-de-im-genes-Atenea/refs/heads/main/IMG_0203.jpeg" alt="Slide 203" className="w-full h-auto object-cover" />
       </motion.section>
 
       <motion.section 
@@ -479,9 +853,19 @@ export default function App() {
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 1 }}
-        className="w-full"
+        className="relative w-full"
       >
-        <img src={images.img0105} alt="Slide 105" className="w-full h-auto object-cover" />
+        <img src="https://raw.githubusercontent.com/andr3sb3nv3/Banco-de-im-genes-Atenea/refs/heads/main/IMG_0205.jpeg" alt="Slide 205" className="w-full h-auto object-cover" />
+        {customData?.img1 && (
+          <div className="absolute top-[21%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[20%] sm:w-[15%] md:w-[12%] lg:w-[10%] aspect-square flex items-center justify-center">
+            <img 
+              src={customData.img1} 
+              alt="Logo Inmobiliaria" 
+              className="w-full h-full object-contain"
+              referrerPolicy="no-referrer"
+            />
+          </div>
+        )}
       </motion.section>
       
       <motion.section 
@@ -541,7 +925,7 @@ export default function App() {
             <h2 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tighter uppercase leading-none mb-4 md:mb-8 italic underline decoration-brand-accent underline-offset-8 decoration-4">Servicios</h2>
             <div>
               <div className="inline-block bg-brand-accent text-brand-primary px-4 py-1 rounded-full font-bold text-xs uppercase tracking-widest mb-4">Representa</div>
-              <p className="text-lg md:text-xl font-medium text-gray-400 mb-6 uppercase italic">Equipo dedicado a (Inmobiliaria)</p>
+              <p className="text-lg md:text-xl font-medium text-gray-400 mb-6 uppercase italic">Equipo dedicado a {customData?.companyName || '(Inmobiliaria)'}</p>
               <ul className="space-y-3">
                 {['Account Manager', 'Paid Media Analyst', 'Patagon Support'].map((item, i) => (
                   <li key={i} className="flex items-center gap-3 text-base md:text-lg text-gray-300">
@@ -585,7 +969,7 @@ export default function App() {
             variants={fadeInUp}
             className="text-center mb-12 md:mb-16"
           >
-            <h1 className="text-3xl sm:text-4xl md:text-6xl font-black mb-4 text-emerald-400 inline-block border-b-4 border-emerald-400 pb-2 uppercase italic tracking-tighter">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl font-black mb-4 text-brand-accent inline-block border-b-4 border-brand-accent pb-2 uppercase italic tracking-tighter">
               Desglose de Servicios
             </h1>
             <p className="text-slate-400 mt-4 md:mt-6 text-sm sm:text-base md:text-xl uppercase tracking-[0.1em] md:tracking-[0.2em]">Selecciona el plan que mejor se adapte a tus objetivos</p>
@@ -607,7 +991,7 @@ export default function App() {
                     onClick={() => setSelectedPlan(plan.id)}
                     className={`relative px-4 py-2.5 md:px-6 md:py-3 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-1.5 md:gap-2 whitespace-nowrap ${
                       selectedPlan === plan.id
-                        ? 'bg-emerald-400 text-brand-primary shadow-[0_0_20px_rgba(52,211,153,0.3)]'
+                        ? 'bg-brand-accent text-brand-primary shadow-[0_0_20px_rgba(74,222,128,0.3)]'
                         : 'text-slate-400 hover:text-white hover:bg-white/5'
                     }`}
                   >
@@ -628,10 +1012,10 @@ export default function App() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
-                    className="relative flex flex-col h-full rounded-[2rem] md:rounded-[2.5rem] p-6 sm:p-8 md:p-10 border-2 bg-white/10 border-emerald-400 shadow-[0_0_50px_-10px_rgba(52,211,153,0.3)]"
+                    className="relative flex flex-col h-full rounded-[2rem] md:rounded-[2.5rem] p-6 sm:p-8 md:p-10 border-2 bg-white/10 border-brand-accent shadow-[0_0_50px_-10px_rgba(74,222,128,0.3)]"
                   >
                     <div className="flex items-center gap-4 mb-6 md:mb-8">
-                      <div className="p-3 bg-emerald-500/10 rounded-2xl">
+                      <div className="p-3 bg-brand-accent/10 rounded-2xl">
                         {plan.icon}
                       </div>
                       <h3 className="text-xl md:text-2xl font-black tracking-widest uppercase italic">{plan.title}</h3>
@@ -639,8 +1023,8 @@ export default function App() {
 
                     <div className="mb-6 md:mb-8 text-left">
                       <div className="flex items-baseline gap-1">
-                        <span className="text-4xl md:text-5xl font-black text-emerald-400 tracking-tighter">{plan.price}</span>
-                        <span className="text-emerald-400/80 font-bold uppercase text-[10px] md:text-xs tracking-widest">{plan.unit}</span>
+                        <span className="text-4xl md:text-5xl font-black text-brand-accent tracking-tighter">{plan.price}</span>
+                        <span className="text-brand-accent/80 font-bold uppercase text-[10px] md:text-xs tracking-widest">{plan.unit}</span>
                       </div>
                       <p className="text-slate-400 text-xs md:text-sm mt-4 leading-relaxed font-medium">
                         {plan.description}
@@ -650,8 +1034,8 @@ export default function App() {
                     <div className="space-y-4 md:space-y-6 mb-8 md:mb-12 flex-grow text-left">
                       {plan.features.map((feature, idx) => (
                         <div key={idx} className="flex items-start gap-3">
-                          <div className="mt-1 bg-emerald-500/20 p-1 rounded-full flex-shrink-0">
-                            <Check className="w-3 h-3 md:w-4 md:h-4 text-emerald-400" />
+                          <div className="mt-1 bg-brand-accent/20 p-1 rounded-full flex-shrink-0">
+                            <Check className="w-3 h-3 md:w-4 md:h-4 text-brand-accent" />
                           </div>
                           <span className="text-xs sm:text-sm md:text-base text-slate-300 font-light leading-snug">{feature}</span>
                         </div>
@@ -659,7 +1043,7 @@ export default function App() {
                     </div>
 
                     <button
-                      className="w-full py-4 md:py-5 rounded-xl md:rounded-2xl font-black uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2 md:gap-3 text-xs md:text-sm bg-emerald-500 text-black shadow-lg shadow-emerald-500/20 hover:bg-emerald-400"
+                      className="w-full py-4 md:py-5 rounded-xl md:rounded-2xl font-black uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2 md:gap-3 text-xs md:text-sm bg-brand-accent text-black shadow-lg shadow-brand-accent/20 hover:opacity-90"
                     >
                       Elegir este plan
                       <MousePointer2 className="w-4 h-4" />
@@ -678,18 +1062,7 @@ export default function App() {
           </motion.div>
         </div>
       </section>
-
-      {/* Footer Final */}
-      <footer className="w-full bg-brand-secondary py-12 md:py-16 border-t border-gray-100">
-        <div className="container mx-auto px-6 md:px-20 flex flex-col md:flex-row justify-between items-center text-[9px] md:text-[11px] uppercase tracking-[0.2em] md:tracking-[0.3em] text-gray-400 font-bold gap-6 md:gap-0">
-          <span className="tracking-[0.3em] md:tracking-[0.5em] text-center md:text-left">ATENEA GROWTH MARKETING</span>
-          <a href="#/create" className="uppercase tracking-widest text-center hover:text-gray-600 transition-colors">Propuesta Comercial - 2024</a>
-          <div className="flex items-center space-x-3 text-black">
-            <div className="w-2 h-2 md:w-3 md:h-3 bg-black rotate-45" />
-            <span className="font-black uppercase tracking-widest text-black text-[10px] md:text-xs">PATAGON AI</span>
-          </div>
-        </div>
-      </footer>
-    </div>
+      </div>
+    </CurtainReveal>
   );
 }

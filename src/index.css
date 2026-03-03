@@ -18,3 +18,29 @@
     100% { transform: translateX(0); }
   }
 }
+
+body {
+  overflow-x: hidden;
+}
+
+/* El contenedor superior que se desliza */
+.reveal-container {
+  position: relative;
+  z-index: 10;
+  background-color: var(--theme-secondary, #ffffff); /* Usamos el color de fondo secundario */
+  box-shadow: 0 20px 50px rgba(0,0,0,0.15); /* Sombra para dar profundidad */
+  margin-bottom: 100dvh;
+}
+
+/* El componente inferior que está "pegado" al fondo */
+.reveal-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 0;
+  height: 100dvh; /* Ocupa toda la pantalla para revelarse */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
