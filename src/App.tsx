@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, useScroll, useTransform } from 'motion/react';
+import { motion, useScroll, useTransform, AnimatePresence } from 'motion/react';
 import { 
   Clock, UserX, Target, ChevronDown, Timer, 
   Check, Minus, Laptop, Users, Info, 
-  MousePointer2, Zap, Palette, Rocket, Star, Eye, X, Linkedin, MessageCircle, Mail
+  MousePointer2, Zap, Palette, Rocket, Star, Eye, X, Linkedin, MessageCircle, Mail,
+  ArrowRight, Hand
 } from 'lucide-react';
 
 function CreateProposal() {
@@ -407,11 +408,23 @@ export default function App() {
   const [selectedPlan, setSelectedPlan] = useState<string>('patagon');
   const [selectedAllianceTab, setSelectedAllianceTab] = useState<string>('atenea');
   const [route, setRoute] = useState(window.location.hash);
+  const [showWhatsApp, setShowWhatsApp] = useState(false);
 
   useEffect(() => {
     const handleHashChange = () => setRoute(window.location.hash);
+    const handleScroll = () => {
+      if (window.scrollY > window.innerHeight * 0.5) {
+        setShowWhatsApp(true);
+      } else {
+        setShowWhatsApp(false);
+      }
+    };
     window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   const customData = React.useMemo(() => {
@@ -532,31 +545,56 @@ export default function App() {
       id: 'atenea',
       label: 'Rol de Atenea',
       title: 'CAPTACIÓN + PERFORMANCE',
-      description: 'ATENEA GENERA Y ESCALA LA DEMANDA',
       logo: 'https://raw.githubusercontent.com/andr3sb3nv3/Banco-de-im-genes-Atenea/refs/heads/main/IMG_0184.png',
-      features: [
-        'Generamos tráfico de calidad desde Google, Meta y Linkedin',
-        'Segmentamos y optimizamos para lead calificado',
-        'Diseñamos creatividades y mensajes para proyectos inmobiliarios',
-        'Optimizamos de forma continua con reporting claro',
-        'Aportamos expertise real en vertical inmobiliaria'
+      examples: [
+        { 
+          title: "ATENEA GENERA Y ESCALA LA DEMANDA", 
+          features: [
+            'Generamos tráfico de calidad desde Google, Meta y Linkedin',
+            'Segmentamos y optimizamos para lead calificado',
+            'Diseñamos creatividades y mensajes para proyectos inmobiliarios',
+            'Optimizamos de forma continua con reporting claro',
+            'Aportamos expertise real en vertical inmobiliaria'
+          ]
+        },
+        { title: "Caso de Éxito: Torre Norte", desc: "Reducción del 45% en el costo por lead mediante retargeting dinámico y creatividades de alto impacto." },
+        { title: "Lanzamiento: Residencial Sur", desc: "Captación de 500+ leads calificados en 30 días usando segmentación avanzada por intención de compra." }
       ]
     },
     {
       id: 'patagon',
       label: 'Rol de Patagon',
       title: 'CONVERSIÓN + CALIFICACIÓN 24/7',
-      description: 'PATAGON CONVIERTE ESA DEMANDA EN OPORTUNIDADES REALES',
       logo: 'https://s.yimg.com/ny/api/res/1.2/P6UWQz6rwjfMH0Fq2E8UMg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTM2MA--/https://media.zenfs.com/es/valora_628/eee9853c1556a5bf4e9c3f9a287e29e6',
-      features: [
-        'Respondemos de forma inmediata 24/7',
-        'Conversamos de manera natural y contextualizada',
-        'Optimizamos las campañas en base a las que performan mejor',
-        'Agendamos visitas y reuniones automáticamente',
-        'Incrementamos la conversión entre 30-400%'
+      examples: [
+        { 
+          title: "PATAGON CONVIERTE ESA DEMANDA EN OPORTUNIDADES REALES", 
+          features: [
+            'Respondemos de forma inmediata 24/7',
+            'Conversamos de manera natural y contextualizada',
+            'Optimizamos las campañas en base a las que performan mejor',
+            'Agendamos visitas y reuniones automáticamente',
+            'Incrementamos la conversión entre 30-400%'
+          ]
+        },
+        { title: "Venta Nocturna", desc: "Un lead consultó a las 3 AM; Patagon lo calificó y agendó una visita para la mañana siguiente sin intervención humana." },
+        { title: "Escalabilidad de Ventas", desc: "Incremento del 150% en visitas efectivas al reducir el tiempo de respuesta de horas a segundos." }
       ]
     }
   ];
+
+  const [currentExampleIndex, setCurrentExampleIndex] = useState(0);
+
+  useEffect(() => {
+    setCurrentExampleIndex(0);
+  }, [selectedAllianceTab]);
+
+  const handleNextExample = () => {
+    const role = allianceRoles.find(r => r.id === selectedAllianceTab);
+    if (role && role.examples) {
+      setCurrentExampleIndex((prev) => (prev + 1) % role.examples.length);
+    }
+  };
 
   const results = [
     { value: "+35%", label: "EN VENTAS CON MENOR INVERSIÓN" },
@@ -743,23 +781,23 @@ export default function App() {
       </section>
 
       {/* SECCIÓN: ALIANZA CON PATAGON */}
-      <section className="relative w-full bg-brand-primary py-20 md:py-32 overflow-hidden border-b border-white/5">
+      <section className="relative w-full bg-brand-primary pt-16 md:pt-24 pb-4 md:pb-6 overflow-hidden border-b border-white/5">
         <div className="container mx-auto px-6 md:px-20 lg:px-32 max-w-7xl relative z-10">
           <motion.div 
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={fadeInUp}
-            className="text-center mb-16 md:mb-24"
+            className="text-center mb-6 md:mb-8"
           >
-            <h2 className="text-4xl sm:text-5xl md:text-7xl font-black text-white uppercase tracking-tighter leading-none mb-8 italic">
+            <h2 className="text-4xl sm:text-5xl md:text-7xl font-black text-white uppercase tracking-tighter leading-none mb-4 italic">
               Alianza con <span className="text-brand-accent">Patagon</span>
             </h2>
           </motion.div>
 
-          <div className={`border border-white/10 rounded-[2rem] md:rounded-[3rem] p-6 sm:p-8 md:p-16 shadow-2xl relative overflow-hidden backdrop-blur-sm transition-all duration-500 ${selectedAllianceTab === 'patagon' ? 'bg-[#edd5b1]' : 'bg-white/5'}`}>
+          <div className={`border border-white/10 rounded-[2rem] md:rounded-[3rem] p-6 sm:p-8 md:p-10 shadow-2xl relative overflow-hidden backdrop-blur-sm transition-all duration-500 ${selectedAllianceTab === 'patagon' ? 'bg-[#edd5b1]' : 'bg-white/5'}`}>
             {/* Tab Selector */}
-            <div className="flex justify-center mb-12 w-full overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+            <div className="flex justify-center mb-4 w-full overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
               <div className={`${selectedAllianceTab === 'patagon' ? 'bg-black/5 border-black/10' : 'bg-white/5 border-white/10'} p-1.5 rounded-full border flex flex-row gap-1 md:gap-2 relative min-w-max transition-colors duration-500`}>
                 {allianceRoles.map((role) => (
                   <button
@@ -792,18 +830,67 @@ export default function App() {
                         <h3 className={`text-3xl md:text-4xl font-black uppercase italic tracking-tighter leading-none transition-colors duration-500 ${selectedAllianceTab === 'patagon' ? 'text-black' : 'text-white'}`}>
                           {role.title}
                         </h3>
-                        <p className={`text-lg font-bold uppercase tracking-wide transition-colors duration-500 ${selectedAllianceTab === 'patagon' ? 'text-black/80' : 'text-brand-accent'}`}>
-                          {role.description}
-                        </p>
-                        <ul className="space-y-4">
-                          {role.features.map((feature, idx) => (
-                            <li key={idx} className={`flex items-start gap-3 text-sm md:text-base font-light uppercase tracking-tight transition-colors duration-500 ${selectedAllianceTab === 'patagon' ? 'text-black/70' : 'text-slate-300'}`}>
-                              <Check className={`${selectedAllianceTab === 'patagon' ? 'text-black' : 'text-brand-accent'} w-5 h-5 mt-0.5 flex-shrink-0 transition-colors duration-500`} />
-                              {feature}
-                            </li>
-                          ))}
-                        </ul>
                       </div>
+                      
+                      {/* Ejemplos Swipeable */}
+                      <div className="relative mt-4">
+                        <div className={`mb-2 flex items-center gap-2 text-xs font-bold uppercase tracking-widest ${selectedAllianceTab === 'patagon' ? 'text-black/40' : 'text-white/40'}`}>
+                          <Hand className="w-4 h-4 animate-bounce" />
+                          Deslizar para ver ejemplos
+                        </div>
+                        
+                        <div className="relative min-h-[450px] md:min-h-[520px] w-full overflow-hidden rounded-2xl">
+                          <AnimatePresence mode="wait">
+                            <motion.div
+                              key={`${role.id}-${currentExampleIndex}`}
+                              initial={{ x: 300, opacity: 0 }}
+                              animate={{ x: 0, opacity: 1 }}
+                              exit={{ x: -300, opacity: 0 }}
+                              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                              drag="x"
+                              dragConstraints={{ left: 0, right: 0 }}
+                              onDragEnd={(_, info) => {
+                                if (info.offset.x < -50) handleNextExample();
+                              }}
+                              onClick={handleNextExample}
+                              className={`absolute inset-0 p-6 md:p-8 flex flex-col justify-start cursor-pointer select-none border-2 ${
+                                selectedAllianceTab === 'patagon' 
+                                  ? 'bg-black/5 border-black/10 text-black' 
+                                  : 'bg-white/5 border-white/10 text-white'
+                              } rounded-2xl backdrop-blur-md`}
+                            >
+                              <div className="flex items-center justify-between mb-2">
+                                <span className={`text-[10px] font-black uppercase tracking-[0.3em] ${selectedAllianceTab === 'patagon' ? 'text-black/40' : 'text-brand-accent'}`}>
+                                  {currentExampleIndex === 0 ? 'Información General' : `Ejemplo ${currentExampleIndex}`}
+                                </span>
+                                <ArrowRight className="w-4 h-4 opacity-50" />
+                              </div>
+                              
+                              <h4 className="text-xl md:text-2xl font-black uppercase italic mb-2 tracking-tight leading-tight">
+                                {role.examples[currentExampleIndex].title}
+                              </h4>
+                              
+                              {role.examples[currentExampleIndex].desc && (
+                                <p className={`text-sm md:text-base font-bold uppercase tracking-wide mb-4 ${selectedAllianceTab === 'patagon' ? 'text-black/80' : 'text-brand-accent'}`}>
+                                  {role.examples[currentExampleIndex].desc}
+                                </p>
+                              )}
+
+                              {role.examples[currentExampleIndex].features && (
+                                <ul className="space-y-3 md:space-y-4">
+                                  {role.examples[currentExampleIndex].features.map((feature, idx) => (
+                                    <li key={idx} className={`flex items-start gap-3 text-xs md:text-sm font-light uppercase tracking-tight transition-colors duration-500 ${selectedAllianceTab === 'patagon' ? 'text-black/70' : 'text-slate-300'}`}>
+                                      <Check className={`${selectedAllianceTab === 'patagon' ? 'text-black' : 'text-brand-accent'} w-4 h-4 mt-0.5 flex-shrink-0 transition-colors duration-500`} />
+                                      {feature}
+                                    </li>
+                                  ))}
+                                </ul>
+                              )}
+                            </motion.div>
+                          </AnimatePresence>
+                        </div>
+                      </div>
+
                       {role.logo && (
                         <div className="pt-4 flex justify-center">
                           <img 
@@ -1062,6 +1149,25 @@ export default function App() {
           </motion.div>
         </div>
       </section>
+
+      {/* WhatsApp Button */}
+      <motion.a
+        href="https://wa.me/5491122334455"
+        target="_blank"
+        rel="noopener noreferrer"
+        initial={{ opacity: 0, scale: 0, x: 20 }}
+        animate={{ 
+          opacity: showWhatsApp ? 1 : 0, 
+          scale: showWhatsApp ? 1 : 0,
+          x: showWhatsApp ? 0 : 20
+        }}
+        className="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:scale-110 transition-transform flex items-center justify-center"
+        title="Contactar por WhatsApp"
+      >
+        <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+      </motion.a>
       </div>
     </CurtainReveal>
   );
