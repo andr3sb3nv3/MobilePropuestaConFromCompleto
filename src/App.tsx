@@ -780,6 +780,7 @@ export default function App() {
         </div>
       </section>
 
+
       {/* SECCIÓN: ALIANZA CON PATAGON */}
       <section className="relative w-full bg-brand-primary pt-16 md:pt-24 pb-4 md:pb-6 overflow-hidden border-b border-white/5">
         <div className="container mx-auto px-6 md:px-20 lg:px-32 max-w-7xl relative z-10">
@@ -886,21 +887,21 @@ export default function App() {
                                   ))}
                                 </ul>
                               )}
+
+                              {currentExampleIndex === 0 && role.logo && (
+                                <div className="mt-auto pt-6 flex justify-center">
+                                  <img 
+                                    src={role.logo} 
+                                    alt={`${role.id} Logo`} 
+                                    className="w-1/4 md:w-1/3 h-auto object-contain hover:scale-110 transition-transform duration-700 relative z-10"
+                                    referrerPolicy="no-referrer"
+                                  />
+                                </div>
+                              )}
                             </motion.div>
                           </AnimatePresence>
                         </div>
                       </div>
-
-                      {role.logo && (
-                        <div className="pt-4 flex justify-center">
-                          <img 
-                            src={role.logo} 
-                            alt={`${role.id} Logo`} 
-                            className="w-1/4 md:w-1/3 h-auto object-contain hover:scale-110 transition-transform duration-700 relative z-10"
-                            referrerPolicy="no-referrer"
-                          />
-                        </div>
-                      )}
                     </div>
                     {role.id === 'patagon' && (
                       <div className="hidden md:flex items-center justify-center">
@@ -955,6 +956,10 @@ export default function App() {
         )}
       </motion.section>
       
+
+
+
+
       <motion.section 
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -998,53 +1003,6 @@ export default function App() {
             </div>
         </div>
       </motion.section>
-
-      {/* SECCIÓN 8: SERVICIOS */}
-      <section className="relative w-full min-h-screen bg-brand-primary py-16 md:py-20 text-white flex items-center">
-        <div className="container mx-auto px-6 md:px-20 lg:px-32 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          <motion.div 
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeInUp}
-            className="lg:col-span-4 space-y-8 md:space-y-12"
-          >
-            <h2 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tighter uppercase leading-none mb-4 md:mb-8 italic underline decoration-brand-accent underline-offset-8 decoration-4">Servicios</h2>
-            <div>
-              <div className="inline-block bg-brand-accent text-brand-primary px-4 py-1 rounded-full font-bold text-xs uppercase tracking-widest mb-4">Representa</div>
-              <p className="text-lg md:text-xl font-medium text-gray-400 mb-6 uppercase italic">Equipo dedicado a {customData?.companyName || '(Inmobiliaria)'}</p>
-              <ul className="space-y-3">
-                {['Account Manager', 'Paid Media Analyst', 'Patagon Support'].map((item, i) => (
-                  <li key={i} className="flex items-center gap-3 text-base md:text-lg text-gray-300">
-                    <div className="w-1.5 h-1.5 rounded-full bg-brand-accent" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </motion.div>
-          <motion.div 
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-            className="lg:col-span-8 space-y-6 pt-4"
-          >
-            <ul className="space-y-3 md:space-y-4">
-              {serviciosList.map((s, i) => (
-                <motion.li 
-                  key={i} 
-                  variants={fadeInUp}
-                  className="flex items-start gap-3 text-base sm:text-lg md:text-xl font-light text-gray-200 leading-snug uppercase tracking-tight"
-                >
-                  <Check className="text-brand-accent w-4 h-4 md:w-5 md:h-5 mt-1 flex-shrink-0" />
-                  {s.text}
-                </motion.li>
-              ))}
-            </ul>
-          </motion.div>
-        </div>
-      </section>
 
       {/* SECCIÓN 9: DESGLOSE DE SERVICIOS */}
       <section className="min-h-screen bg-brand-primary text-white p-4 md:p-12 lg:p-24 font-sans border-t border-white/5">
