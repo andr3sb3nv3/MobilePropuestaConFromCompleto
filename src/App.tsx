@@ -6,6 +6,7 @@ import {
   MousePointer2, Zap, Palette, Rocket, Star, Eye, X, Linkedin, MessageCircle, Mail,
   ArrowRight, Hand
 } from 'lucide-react';
+import PlanEscalamiento from './components/PlanEscalamiento';
 
 function CreateProposal() {
   const [img1, setImg1] = useState('');
@@ -346,7 +347,12 @@ const CurtainReveal: React.FC<CurtainRevealProps> = ({
   );
 };
 
-function ContactCTA() {
+interface ContactCTAProps {
+  companyName: string;
+  setCompanyName: (name: string) => void;
+}
+
+function ContactCTA({ companyName, setCompanyName }: ContactCTAProps) {
   return (
     <div className="w-full max-w-4xl mx-auto px-6 py-20 bg-white text-center">
       <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-brand-primary mb-8">
@@ -370,6 +376,8 @@ function ContactCTA() {
           <label className="block text-sm font-bold text-gray-700 mb-1">Nombre de la empresa</label>
           <input 
             type="text" 
+            value={companyName}
+            onChange={(e) => setCompanyName(e.target.value)}
             className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-accent focus:border-transparent"
             placeholder="Ej. Acme Corp"
           />
@@ -409,6 +417,7 @@ export default function App() {
   const [selectedAllianceTab, setSelectedAllianceTab] = useState<string>('atenea');
   const [route, setRoute] = useState(window.location.hash);
   const [showWhatsApp, setShowWhatsApp] = useState(false);
+  const [companyName, setCompanyName] = useState("");
 
   useEffect(() => {
     const handleHashChange = () => setRoute(window.location.hash);
@@ -629,9 +638,12 @@ export default function App() {
     }
   };
 
+  const whatsappMessage = `Hola Atenea Growth!\nLes escribo de parte de ${companyName ? companyName : '[Nombre de tu empresa]'}.\nMe gustaría contactarme con un asesor`;
+  const whatsappUrl = `https://wa.me/5491124774256?text=${encodeURIComponent(whatsappMessage)}`;
+
   return (
     <CurtainReveal
-      footer={<ContactCTA />}
+      footer={<ContactCTA companyName={companyName} setCompanyName={setCompanyName} />}
       footerClassName="bg-white"
     >
       <div style={customStyles} className="w-full min-h-screen bg-brand-secondary font-sans text-brand-primary">
@@ -1004,6 +1016,9 @@ export default function App() {
         </div>
       </motion.section>
 
+      {/* SECCIÓN 8.5: PLAN DE ESCALAMIENTO */}
+      <PlanEscalamiento />
+
       {/* SECCIÓN 9: DESGLOSE DE SERVICIOS */}
       <section className="min-h-screen bg-brand-primary text-white p-4 md:p-12 lg:p-24 font-sans border-t border-white/5">
         <div className="max-w-7xl mx-auto">
@@ -1110,7 +1125,7 @@ export default function App() {
 
       {/* WhatsApp Button */}
       <motion.a
-        href="https://wa.me/5491122334455"
+        href={whatsappUrl}
         target="_blank"
         rel="noopener noreferrer"
         initial={{ opacity: 0, scale: 0, x: 20 }}
