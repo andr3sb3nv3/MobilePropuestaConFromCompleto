@@ -4,7 +4,7 @@ import {
   Clock, UserX, Target, ChevronDown, Timer, 
   Check, Minus, Laptop, Users, Info, 
   MousePointer2, Zap, Palette, Rocket, Star, Eye, X, Linkedin, MessageCircle, Mail,
-  ArrowRight, Hand
+  ArrowRight, Hand, Send
 } from 'lucide-react';
 import PlanEscalamiento from './components/PlanEscalamiento';
 
@@ -354,60 +354,118 @@ interface ContactCTAProps {
 
 function ContactCTA({ companyName, setCompanyName }: ContactCTAProps) {
   return (
-    <div className="w-full max-w-4xl mx-auto px-6 py-20 bg-white text-center">
-      <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-brand-primary mb-8">
-        Hablemos
-      </h2>
-      
-      <div className="flex justify-center gap-6 mb-12">
-        <a href="#" className="p-4 bg-gray-50 rounded-full hover:bg-brand-accent hover:text-white transition-colors text-brand-primary">
-          <Linkedin className="w-8 h-8" />
-        </a>
-        <a href="#" className="p-4 bg-gray-50 rounded-full hover:bg-brand-accent hover:text-white transition-colors text-brand-primary">
-          <MessageCircle className="w-8 h-8" />
-        </a>
-        <a href="#" className="p-4 bg-gray-50 rounded-full hover:bg-brand-accent hover:text-white transition-colors text-brand-primary">
-          <Mail className="w-8 h-8" />
-        </a>
-      </div>
+    <div className="w-full bg-[#e0e5ec] py-16 md:py-24">
+      <section className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-stretch">
+          
+          {/* Columna Izquierda: Identidad y Social */}
+          <div className="flex flex-col items-center justify-center gap-4 md:gap-12 p-4 sm:p-8 md:p-10 rounded-[1.5rem] md:rounded-[4rem] bg-[#e0e5ec] shadow-[10px_10px_20px_#bebebe,-10px_-10px_20px_#ffffff] md:shadow-[25px_25px_50px_#bebebe,-25px_-25px_50px_#ffffff]">
+            
+            <div className="flex flex-col items-center gap-3 md:gap-8 w-full">
+              <div className="space-y-1.5 md:space-y-3">
+                <h2 className="text-2xl sm:text-4xl md:text-6xl font-black italic uppercase tracking-tighter leading-none text-[#001B3D] text-center">
+                  Conecta con
+                </h2>
+                {/* Línea de acento sutil */}
+                <div className="h-1 w-12 md:h-1.5 md:w-20 bg-[#16E077] mx-auto rounded-full" />
+              </div>
+              
+              {/* Contenedor de imagen puramente neomórfico */}
+              <div className="p-3 md:p-8 rounded-[1rem] md:rounded-[2.5rem] bg-[#e0e5ec] shadow-[inset_4px_4px_8px_#b8b9be,inset_-4px_-4px_8px_#ffffff] md:shadow-[inset_8px_8px_16px_#b8b9be,inset_-8px_-8px_16px_#ffffff] flex items-center justify-center">
+                <img 
+                  src="https://raw.githubusercontent.com/andr3sb3nv3/AteneaPNG/refs/heads/main/IMG_0211.png" 
+                  alt="Atenea" 
+                  className="h-8 sm:h-16 md:h-28 w-auto object-contain"
+                  referrerPolicy="no-referrer"
+                />
+              </div>
+            </div>
+            
+            {/* Iconos Sociales con el color verde como acento en el icono mismo */}
+            <div className="flex gap-3 sm:gap-6 md:gap-8 justify-center flex-wrap">
+              {[
+                { icon: Mail, href: "mailto:hola@ateneagrowth.com", label: "Email" },
+                { icon: MessageCircle, href: "#", label: "WhatsApp" },
+                { icon: Linkedin, href: "#", label: "LinkedIn" },
+              ].map((item, idx) => (
+                <a
+                  key={idx}
+                  href={item.href}
+                  aria-label={item.label}
+                  className="w-10 h-10 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-[#e0e5ec] rounded-xl md:rounded-2xl flex items-center justify-center text-[#16E077] transition-all duration-300
+                             shadow-[4px_4px_8px_#b8b9be,-4px_-4px_8px_#ffffff] md:shadow-[8px_8px_16px_#b8b9be,-8px_-8px_16px_#ffffff] 
+                             hover:shadow-[inset_2px_2px_4px_#b8b9be,inset_-2px_-2px_4px_#ffffff] md:hover:shadow-[inset_4px_4px_8px_#b8b9be,inset_-4px_-4px_8px_#ffffff]
+                             hover:scale-95 group"
+                >
+                  <item.icon className="w-5 h-5 sm:w-7 sm:h-7 md:w-8 md:h-8" strokeWidth={2.5} />
+                </a>
+              ))}
+            </div>
+          </div>
 
-      <form className="max-w-md mx-auto space-y-4 text-left">
-        <div>
-          <label className="block text-sm font-bold text-gray-700 mb-1">Nombre de la empresa</label>
-          <input 
-            type="text" 
-            value={companyName}
-            onChange={(e) => setCompanyName(e.target.value)}
-            className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-accent focus:border-transparent"
-            placeholder="Ej. Acme Corp"
-          />
-        </div>
-        <div>
-          <label className="block text-sm font-bold text-gray-700 mb-1">Mensaje</label>
-          <textarea 
-            rows={4}
-            className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-accent focus:border-transparent resize-none"
-            placeholder="¿En qué podemos ayudarte?"
-          />
-        </div>
-        <button 
-          type="button"
-          className="w-full py-4 bg-brand-primary text-white font-bold rounded-xl hover:bg-brand-primary/90 transition-colors uppercase tracking-wider text-sm"
-        >
-          Enviar Mensaje
-        </button>
-      </form>
+          {/* Columna Derecha: Formulario */}
+          <div className="bg-[#e0e5ec] rounded-[1.5rem] md:rounded-[4rem] p-4 sm:p-8 md:p-14 shadow-[10px_10px_20px_#bebebe,-10px_-10px_20px_#ffffff] md:shadow-[25px_25px_50px_#bebebe,-25px_-25px_50px_#ffffff]">
+            <form className="space-y-3 sm:space-y-8 md:space-y-10" onSubmit={(e) => e.preventDefault()}>
+              <div className="space-y-1.5 md:space-y-3">
+                <label className="text-[9px] md:text-xs font-black text-[#001B3D]/70 ml-2 md:ml-4 uppercase tracking-[0.15em] md:tracking-[0.3em] flex items-center gap-1.5 md:gap-2">
+                  <div className="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-[#16E077]" />
+                  Nombre
+                </label>
+                <input 
+                  type="text" 
+                  placeholder="Tu nombre completo"
+                  className="w-full p-2.5 md:p-5 bg-[#e0e5ec] rounded-xl md:rounded-2xl outline-none text-[#001B3D] font-medium text-xs md:text-base
+                             shadow-[inset_4px_4px_8px_#b8b9be,inset_-4px_-4px_8px_#ffffff] md:shadow-[inset_8px_8px_16px_#b8b9be,inset_-8px_-8px_16px_#ffffff]
+                             focus:shadow-[inset_6px_6px_12px_#b8b9be,inset_-6px_-6px_12px_#ffffff] md:focus:shadow-[inset_10px_10px_20px_#b8b9be,inset_-10px_-10px_20px_#ffffff]
+                             placeholder:text-[#001B3D]/30 transition-all"
+                />
+              </div>
 
-      {/* Logo Atenea Footer */}
-      <div className="mt-20 flex justify-center">
-        <a href="#/create" className="inline-block transition-transform hover:scale-105">
-          <img 
-            src="https://raw.githubusercontent.com/andr3sb3nv3/AteneaPNG/refs/heads/main/IMG_0184.png" 
-            alt="Logo Atenea" 
-            className="h-16 md:h-20 w-auto object-contain opacity-80 hover:opacity-100 transition-opacity cursor-pointer"
-          />
-        </a>
-      </div>
+              <div className="space-y-1.5 md:space-y-3">
+                <label className="text-[9px] md:text-xs font-black text-[#001B3D]/70 ml-2 md:ml-4 uppercase tracking-[0.15em] md:tracking-[0.3em] flex items-center gap-1.5 md:gap-2">
+                  <div className="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-[#16E077]" />
+                  Email
+                </label>
+                <input 
+                  type="email" 
+                  placeholder="hola@ateneagrowth.com"
+                  className="w-full p-2.5 md:p-5 bg-[#e0e5ec] rounded-xl md:rounded-2xl outline-none text-[#001B3D] font-medium text-xs md:text-base
+                             shadow-[inset_4px_4px_8px_#b8b9be,inset_-4px_-4px_8px_#ffffff] md:shadow-[inset_8px_8px_16px_#b8b9be,inset_-8px_-8px_16px_#ffffff]
+                             focus:shadow-[inset_6px_6px_12px_#b8b9be,inset_-6px_-6px_12px_#ffffff] md:focus:shadow-[inset_10px_10px_20px_#b8b9be,inset_-10px_-10px_20px_#ffffff]
+                             placeholder:text-[#001B3D]/30 transition-all"
+                />
+              </div>
+
+              <div className="space-y-1.5 md:space-y-3">
+                <label className="text-[9px] md:text-xs font-black text-[#001B3D]/70 ml-2 md:ml-4 uppercase tracking-[0.15em] md:tracking-[0.3em] flex items-center gap-1.5 md:gap-2">
+                  <div className="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-[#16E077]" />
+                  Mensaje
+                </label>
+                <textarea 
+                  placeholder="¿Cómo podemos ayudarte?"
+                  className="w-full h-16 md:h-32 p-2.5 md:p-5 bg-[#e0e5ec] rounded-xl md:rounded-2xl outline-none text-[#001B3D] font-medium resize-none text-xs md:text-base
+                             shadow-[inset_4px_4px_8px_#b8b9be,inset_-4px_-4px_8px_#ffffff] md:shadow-[inset_8px_8px_16px_#b8b9be,inset_-8px_-8px_16px_#ffffff]
+                             focus:shadow-[inset_6px_6px_12px_#b8b9be,inset_-6px_-6px_12px_#ffffff] md:focus:shadow-[inset_10px_10px_20px_#b8b9be,inset_-10px_-10px_20px_#ffffff]
+                             placeholder:text-[#001B3D]/30 transition-all"
+                ></textarea>
+              </div>
+
+              <button 
+                type="submit"
+                className="w-full py-3 md:py-6 bg-[#16E077] rounded-xl md:rounded-2xl font-black text-[#001B3D] uppercase tracking-[0.15em] md:tracking-[0.4em] text-[9px] md:text-xs
+                           shadow-[4px_4px_10px_rgba(22,224,119,0.25)] md:shadow-[8px_8px_20px_rgba(22,224,119,0.25)]
+                           hover:shadow-[6px_6px_15px_rgba(22,224,119,0.35)] md:hover:shadow-[12px_12px_25px_rgba(22,224,119,0.35)]
+                           active:scale-[0.98] active:shadow-[inset_2px_2px_5px_rgba(0,0,0,0.1)] md:active:shadow-[inset_4px_4px_10px_rgba(0,0,0,0.1)]
+                           transition-all duration-300 flex items-center justify-center gap-2 md:gap-4 group mt-1 md:mt-2"
+              >
+                <Send className="w-3.5 h-3.5 md:w-[18px] md:h-[18px] group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                Enviar Mensaje
+              </button>
+            </form>
+          </div>
+
+        </div>
+      </section>
     </div>
   );
 }
@@ -710,82 +768,54 @@ export default function App() {
         </motion.div>
       </section>
 
-      {/* SECCIONES DE IMAGEN */}
-      <motion.section 
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1 }}
-        className="w-full bg-brand-secondary flex flex-col border-b border-gray-100"
-      >
-        <img src={images.img0124} alt="Slide 0124" className="w-full h-auto block object-cover" />
-        
-        <div className="w-full overflow-hidden bg-brand-secondary flex flex-col">
-          <div className="flex w-max animate-marquee">
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((idx) => (
-              <img 
-                key={`diagrama-${idx}`} 
-                src={images.diagrama} 
-                alt="Diagrama" 
-                className="h-20 sm:h-28 md:h-36 lg:h-48 w-auto max-w-none flex-shrink-0 object-contain" 
-              />
-            ))}
-          </div>
-          <div className="flex w-max animate-marquee-reverse">
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((idx) => (
-              <img 
-                key={`diagrama2-${idx}`} 
-                src={images.diagrama2} 
-                alt="Diagrama 2" 
-                className="h-20 sm:h-28 md:h-36 lg:h-48 w-auto max-w-none flex-shrink-0 object-contain" 
-              />
-            ))}
-          </div>
-        </div>
-      </motion.section>
-
       {/* SECCIÓN: VISIÓN COMPARTIDA */}
       {customData && <VisionCompartidaSection customData={customData} />}
 
       {/* SECCIÓN 2: EL CONTEXTO */}
-      <section className="relative w-full min-h-screen bg-brand-secondary py-20 md:py-24 flex flex-col justify-center border-b border-gray-100">
-        <div className="container mx-auto px-6 md:px-20 lg:px-32 max-w-6xl">
+      <section className="relative w-full min-h-[100dvh] bg-[#e0e5ec] py-8 md:py-16 flex flex-col justify-center border-b border-gray-200 overflow-hidden">
+        <div className="container mx-auto px-4 sm:px-6 md:px-20 lg:px-32 max-w-6xl flex flex-col h-full justify-evenly">
           <motion.div 
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, margin: "-50px" }}
             variants={fadeInUp}
-            className="mb-16 md:mb-20"
+            className="mb-6 md:mb-12 text-center md:text-left"
           >
-            <h2 className="text-4xl sm:text-5xl md:text-8xl font-bold tracking-tight text-brand-primary">El contexto</h2>
+            <h2 className="text-3xl sm:text-4xl md:text-7xl font-black tracking-tight text-slate-700 drop-shadow-sm uppercase">El contexto</h2>
           </motion.div>
 
           <motion.div 
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, margin: "-50px" }}
             variants={staggerContainer}
-            className="space-y-12 md:space-y-20"
+            className="space-y-4 md:space-y-8"
           >
-            <motion.div variants={fadeInUp} className="flex flex-col md:flex-row items-start space-y-4 md:space-y-0 md:space-x-10">
-              <div className="bg-gray-100 p-4 md:p-5 rounded-2xl flex-shrink-0"><Timer className="w-10 h-10 md:w-12 md:h-12 text-gray-700" /></div>
-              <div className="flex-1 border-b border-gray-200 pb-8 md:pb-10 uppercase tracking-tight">
-                <p className="text-lg sm:text-xl md:text-3xl text-gray-700 leading-relaxed mb-4">El sector inmobiliario pierde miles de leads por tiempos de respuesta lentos y mala calificación.</p>
-                <p className="text-lg sm:text-xl md:text-3xl text-[#22c55e] font-bold">Responder en 5 minutos convierte 100x más que hacerlo en 30.</p>
+            <motion.div variants={fadeInUp} className="flex flex-row items-center md:items-start space-x-3 md:space-x-8 bg-[#e0e5ec] p-4 md:p-8 rounded-3xl shadow-[8px_8px_16px_#a3b1c6,-8px_-8px_16px_#ffffff]">
+              <div className="bg-[#e0e5ec] p-3 md:p-5 rounded-2xl flex-shrink-0 shadow-[inset_4px_4px_8px_#a3b1c6,inset_-4px_-4px_8px_#ffffff]">
+                <Timer className="w-6 h-6 md:w-10 md:h-10 text-brand-accent" />
+              </div>
+              <div className="flex-1 uppercase tracking-tight">
+                <p className="text-[11px] sm:text-sm md:text-xl lg:text-2xl text-slate-600 leading-snug md:leading-relaxed mb-1 md:mb-2 font-medium">El sector inmobiliario pierde leads por tiempos de respuesta lentos.</p>
+                <p className="text-[11px] sm:text-sm md:text-xl lg:text-2xl text-brand-accent font-black drop-shadow-sm">Responder en 5 min convierte 100x más que en 30.</p>
               </div>
             </motion.div>
 
-            <motion.div variants={fadeInUp} className="flex flex-col md:flex-row items-start space-y-4 md:space-y-0 md:space-x-10">
-              <div className="bg-gray-100 p-4 md:p-5 rounded-2xl flex-shrink-0"><UserX className="w-10 h-10 md:w-12 md:h-12 text-gray-700" /></div>
-              <div className="flex-1 border-b border-gray-200 pb-8 md:pb-10 text-lg sm:text-xl md:text-3xl text-gray-700 leading-relaxed uppercase tracking-tight">
-                <p>Los formularios y chatbots tradicionales destruyen conversión: no califican, no siguen el playbook y no actualizan el CRM.</p>
+            <motion.div variants={fadeInUp} className="flex flex-row items-center md:items-start space-x-3 md:space-x-8 bg-[#e0e5ec] p-4 md:p-8 rounded-3xl shadow-[8px_8px_16px_#a3b1c6,-8px_-8px_16px_#ffffff]">
+              <div className="bg-[#e0e5ec] p-3 md:p-5 rounded-2xl flex-shrink-0 shadow-[inset_4px_4px_8px_#a3b1c6,inset_-4px_-4px_8px_#ffffff]">
+                <UserX className="w-6 h-6 md:w-10 md:h-10 text-rose-400" />
+              </div>
+              <div className="flex-1 text-[11px] sm:text-sm md:text-xl lg:text-2xl text-slate-600 leading-snug md:leading-relaxed uppercase tracking-tight font-medium">
+                <p>Los formularios y chatbots tradicionales destruyen conversión: no califican, ni actualizan el CRM.</p>
               </div>
             </motion.div>
 
-            <motion.div variants={fadeInUp} className="flex flex-col md:flex-row items-start space-y-4 md:space-y-0 md:space-x-10">
-              <div className="bg-gray-100 p-4 md:p-5 rounded-2xl flex-shrink-0"><Target className="w-10 h-10 md:w-12 md:h-12 text-gray-700" /></div>
-              <div className="flex-1 text-lg sm:text-xl md:text-3xl text-gray-700 leading-relaxed uppercase tracking-tight font-bold">
-                <p>{customData?.companyName ? `${customData.companyName} necesita` : 'Las inmobiliarias necesitan'}: velocidad + calificación real + CRM actualizado en tiempo real para no perder oportunidades.</p>
+            <motion.div variants={fadeInUp} className="flex flex-row items-center md:items-start space-x-3 md:space-x-8 bg-[#e0e5ec] p-4 md:p-8 rounded-3xl shadow-[8px_8px_16px_#a3b1c6,-8px_-8px_16px_#ffffff]">
+              <div className="bg-[#e0e5ec] p-3 md:p-5 rounded-2xl flex-shrink-0 shadow-[inset_4px_4px_8px_#a3b1c6,inset_-4px_-4px_8px_#ffffff]">
+                <Target className="w-6 h-6 md:w-10 md:h-10 text-blue-500" />
+              </div>
+              <div className="flex-1 text-[11px] sm:text-sm md:text-xl lg:text-2xl text-slate-700 leading-snug md:leading-relaxed uppercase tracking-tight font-black">
+                <p>{customData?.companyName ? `${customData.companyName} necesita` : 'Las inmobiliarias necesitan'}: velocidad + calificación real + CRM en tiempo real.</p>
               </div>
             </motion.div>
           </motion.div>
@@ -803,23 +833,25 @@ export default function App() {
             variants={fadeInUp}
             className="text-center mb-6 md:mb-8"
           >
-            <h2 className="text-4xl sm:text-5xl md:text-7xl font-black text-white uppercase tracking-tighter leading-none mb-4 italic">
-              Alianza con <span className="text-brand-accent">Patagon</span>
+            <h2 className="text-4xl sm:text-5xl md:text-7xl font-black text-white uppercase tracking-tighter leading-none mb-4 italic drop-shadow-[0_0_12px_rgba(255,255,255,0.4)]">
+              Alianza con <span className="text-brand-accent drop-shadow-[0_0_12px_rgba(74,222,128,0.6)]">Patagon</span>
             </h2>
           </motion.div>
 
-          <div className={`border border-white/10 rounded-[2rem] md:rounded-[3rem] p-6 sm:p-8 md:p-10 shadow-2xl relative overflow-hidden backdrop-blur-sm transition-all duration-500 ${selectedAllianceTab === 'patagon' ? 'bg-[#edd5b1]' : 'bg-white/5'}`}>
+          <div className={`rounded-[2rem] md:rounded-[3rem] p-6 sm:p-8 md:p-10 relative overflow-hidden transition-all duration-500 ${selectedAllianceTab === 'patagon' ? 'bg-[#edd5b1] shadow-[12px_12px_24px_#c9b596,-12px_-12px_24px_#ffffff]' : 'bg-brand-primary shadow-[12px_12px_24px_rgba(0,0,0,0.5),-12px_-12px_24px_rgba(255,255,255,0.05)]'}`}>
             {/* Tab Selector */}
             <div className="flex justify-center mb-4 w-full overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-              <div className={`${selectedAllianceTab === 'patagon' ? 'bg-black/5 border-black/10' : 'bg-white/5 border-white/10'} p-1.5 rounded-full border flex flex-row gap-1 md:gap-2 relative min-w-max transition-colors duration-500`}>
+              <div className={`${selectedAllianceTab === 'patagon' ? 'bg-[#edd5b1] shadow-[inset_6px_6px_12px_#c9b596,inset_-6px_-6px_12px_#ffffff]' : 'bg-brand-primary shadow-[inset_6px_6px_12px_rgba(0,0,0,0.5),inset_-6px_-6px_12px_rgba(255,255,255,0.05)]'} p-1.5 rounded-full flex flex-row gap-1 md:gap-2 relative min-w-max transition-colors duration-500`}>
                 {allianceRoles.map((role) => (
                   <button
                     key={role.id}
                     onClick={() => setSelectedAllianceTab(role.id)}
                     className={`relative px-4 py-2.5 md:px-10 md:py-4 rounded-full text-[10px] sm:text-xs md:text-sm font-bold uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-1.5 md:gap-2 whitespace-nowrap ${
                       selectedAllianceTab === role.id
-                        ? 'bg-brand-accent text-brand-primary shadow-[0_0_20px_rgba(74,222,128,0.3)]'
-                        : selectedAllianceTab === 'patagon' ? 'text-black/60 hover:text-black hover:bg-black/5' : 'text-slate-400 hover:text-white hover:bg-white/5'
+                        ? selectedAllianceTab === 'patagon'
+                          ? 'bg-[#edd5b1] text-brand-primary shadow-[4px_4px_8px_#c9b596,-4px_-4px_8px_#ffffff]'
+                          : 'bg-brand-accent text-brand-primary shadow-[4px_4px_8px_rgba(0,0,0,0.3),-4px_-4px_8px_rgba(255,255,255,0.2)]'
+                        : selectedAllianceTab === 'patagon' ? 'text-black/60 hover:text-black' : 'text-slate-400 hover:text-white drop-shadow-[0_0_5px_rgba(255,255,255,0.3)]'
                     }`}
                   >
                     {role.label}
@@ -840,7 +872,7 @@ export default function App() {
                   >
                     <div className="space-y-8">
                       <div className="space-y-6">
-                        <h3 className={`text-3xl md:text-4xl font-black uppercase italic tracking-tighter leading-none transition-colors duration-500 ${selectedAllianceTab === 'patagon' ? 'text-black' : 'text-white'}`}>
+                        <h3 className={`text-3xl md:text-4xl font-black uppercase italic tracking-tighter leading-none transition-colors duration-500 ${selectedAllianceTab === 'patagon' ? 'text-black' : 'text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.4)]'}`}>
                           {role.title}
                         </h3>
                       </div>
@@ -866,25 +898,25 @@ export default function App() {
                                 if (info.offset.x < -50) handleNextExample();
                               }}
                               onClick={handleNextExample}
-                              className={`absolute inset-0 p-6 md:p-8 flex flex-col justify-start cursor-pointer select-none border-2 ${
+                              className={`absolute inset-0 p-6 md:p-8 flex flex-col justify-start cursor-pointer select-none ${
                                 selectedAllianceTab === 'patagon' 
-                                  ? 'bg-black/5 border-black/10 text-black' 
-                                  : 'bg-white/5 border-white/10 text-white'
-                              } rounded-2xl backdrop-blur-md`}
+                                  ? 'bg-[#edd5b1] shadow-[8px_8px_16px_#c9b596,-8px_-8px_16px_#ffffff] text-black' 
+                                  : 'bg-brand-primary shadow-[8px_8px_16px_rgba(0,0,0,0.5),-8px_-8px_16px_rgba(255,255,255,0.05)] text-white'
+                              } rounded-2xl transition-all duration-500`}
                             >
                               <div className="flex items-center justify-between mb-2">
-                                <span className={`text-[10px] font-black uppercase tracking-[0.3em] ${selectedAllianceTab === 'patagon' ? 'text-black/40' : 'text-brand-accent'}`}>
+                                <span className={`text-[10px] font-black uppercase tracking-[0.3em] ${selectedAllianceTab === 'patagon' ? 'text-black/40' : 'text-brand-accent drop-shadow-[0_0_8px_rgba(74,222,128,0.5)]'}`}>
                                   {currentExampleIndex === 0 ? 'Información General' : `Ejemplo ${currentExampleIndex}`}
                                 </span>
                                 <ArrowRight className="w-4 h-4 opacity-50" />
                               </div>
                               
-                              <h4 className="text-xl md:text-2xl font-black uppercase italic mb-2 tracking-tight leading-tight">
+                              <h4 className={`text-xl md:text-2xl font-black uppercase italic mb-2 tracking-tight leading-tight ${selectedAllianceTab === 'patagon' ? 'text-black' : 'text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]'}`}>
                                 {role.examples[currentExampleIndex].title}
                               </h4>
                               
                               {role.examples[currentExampleIndex].desc && (
-                                <p className={`text-sm md:text-base font-bold uppercase tracking-wide mb-4 ${selectedAllianceTab === 'patagon' ? 'text-black/80' : 'text-brand-accent'}`}>
+                                <p className={`text-sm md:text-base font-bold uppercase tracking-wide mb-4 ${selectedAllianceTab === 'patagon' ? 'text-black/80' : 'text-brand-accent drop-shadow-[0_0_8px_rgba(74,222,128,0.5)]'}`}>
                                   {role.examples[currentExampleIndex].desc}
                                 </p>
                               )}
@@ -892,8 +924,8 @@ export default function App() {
                               {role.examples[currentExampleIndex].features && (
                                 <ul className="space-y-3 md:space-y-4">
                                   {role.examples[currentExampleIndex].features.map((feature, idx) => (
-                                    <li key={idx} className={`flex items-start gap-3 text-xs md:text-sm font-light uppercase tracking-tight transition-colors duration-500 ${selectedAllianceTab === 'patagon' ? 'text-black/70' : 'text-slate-300'}`}>
-                                      <Check className={`${selectedAllianceTab === 'patagon' ? 'text-black' : 'text-brand-accent'} w-4 h-4 mt-0.5 flex-shrink-0 transition-colors duration-500`} />
+                                    <li key={idx} className={`flex items-start gap-3 text-xs md:text-sm font-light uppercase tracking-tight transition-colors duration-500 ${selectedAllianceTab === 'patagon' ? 'text-black/70' : 'text-white drop-shadow-[0_0_5px_rgba(255,255,255,0.3)]'}`}>
+                                      <Check className={`${selectedAllianceTab === 'patagon' ? 'text-black' : 'text-brand-accent drop-shadow-[0_0_8px_rgba(74,222,128,0.6)]'} w-4 h-4 mt-0.5 flex-shrink-0 transition-colors duration-500`} />
                                       {feature}
                                     </li>
                                   ))}
@@ -968,20 +1000,40 @@ export default function App() {
         )}
       </motion.section>
       
-
-
-
-
+      {/* SECCIONES DE IMAGEN (COMPROBANTE) */}
       <motion.section 
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 1 }}
-        className="w-full"
+        className="w-full bg-brand-secondary flex flex-col border-b border-gray-100"
       >
-        <img src={images.img0082} alt="Slide 82" className="w-full h-auto object-cover" />
+        <img src={images.img0124} alt="Slide 0124" className="w-full h-auto block object-cover" />
+        
+        <div className="w-full overflow-hidden bg-brand-secondary flex flex-col">
+          <div className="flex w-max animate-marquee">
+            {[1, 2, 3, 4, 5, 6, 7, 8].map((idx) => (
+              <img 
+                key={`diagrama-${idx}`} 
+                src={images.diagrama} 
+                alt="Diagrama" 
+                className="h-20 sm:h-28 md:h-36 lg:h-48 w-auto max-w-none flex-shrink-0 object-contain" 
+              />
+            ))}
+          </div>
+          <div className="flex w-max animate-marquee-reverse">
+            {[1, 2, 3, 4, 5, 6, 7, 8].map((idx) => (
+              <img 
+                key={`diagrama2-${idx}`} 
+                src={images.diagrama2} 
+                alt="Diagrama 2" 
+                className="h-20 sm:h-28 md:h-36 lg:h-48 w-auto max-w-none flex-shrink-0 object-contain" 
+              />
+            ))}
+          </div>
+        </div>
       </motion.section>
-      
+
       <motion.section 
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -1015,6 +1067,31 @@ export default function App() {
             </div>
         </div>
       </motion.section>
+
+      <div className="marquee-bar">
+        <div className="marquee-row">
+          {/* Se duplica el array para crear el efecto de scroll infinito sin cortes */}
+          {[...Array(2)].map((_, i) => (
+            <React.Fragment key={i}>
+              {[
+                "Meta Ads", 
+                "Google Ads", 
+                "Mercado Libre Ads", 
+                "TikTok Ads", 
+                "Performance Marketing", 
+                "ROAS Optimization", 
+                "Full-Funnel Attribution", 
+                "Creative Testing"
+              ].map((item) => (
+                <span key={item} className="m-item">
+                  {item}
+                  <span className="m-sep">✦</span>
+                </span>
+              ))}
+            </React.Fragment>
+          ))}
+        </div>
+      </div>
 
       {/* SECCIÓN 8.5: PLAN DE ESCALAMIENTO */}
       <PlanEscalamiento />
