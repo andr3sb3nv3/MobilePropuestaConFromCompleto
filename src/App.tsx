@@ -709,11 +709,11 @@ export default function App() {
         {/* SECCIÓN: IMAGEN DE FONDO (CARÁTULA) */}
       <section className="relative w-full h-screen flex items-center overflow-hidden">
         <img 
-          src="https://raw.githubusercontent.com/andr3sb3nv3/Banco-de-im-genes-Atenea/refs/heads/main/ffffff.drawio.png" 
+          src="https://raw.githubusercontent.com/andr3sb3nv3/Banco-de-im-genes-Atenea/refs/heads/main/IMG_0507.jpeg" 
           alt="Fondo" 
           className="absolute inset-0 w-full h-full object-cover saturate-150 contrast-125 brightness-110"
         />
-        <div className="absolute inset-0 z-10 container mx-auto px-6 md:px-20 lg:px-32 flex flex-col justify-center">
+        <div className="absolute inset-0 z-10 container mx-auto px-6 md:px-20 lg:px-32 flex flex-col justify-center pt-20">
           <motion.div 
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
@@ -753,19 +753,6 @@ export default function App() {
           </div>
         </motion.div>
 
-        {/* Bottom Right Logo */}
-        <motion.div
-          className="absolute bottom-6 right-6 md:bottom-10 md:right-10 z-20"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.5, duration: 0.8 }}
-        >
-          <img 
-            src="https://raw.githubusercontent.com/andr3sb3nv3/Banco-de-im-genes-Atenea/refs/heads/main/IMG_0184.png" 
-            alt="Logo Atenea" 
-            className="h-24 md:h-32 w-auto object-contain"
-          />
-        </motion.div>
       </section>
 
       {/* SECCIÓN: VISIÓN COMPARTIDA */}
@@ -1094,7 +1081,7 @@ export default function App() {
       </div>
 
       {/* SECCIÓN 8.5: PLAN DE ESCALAMIENTO */}
-      <PlanEscalamiento />
+      <PlanEscalamiento customData={customData} />
 
       {/* SECCIÓN 9: DESGLOSE DE SERVICIOS */}
       <section className="min-h-screen bg-brand-primary text-white p-4 md:p-12 lg:p-24 font-sans border-t border-white/5">

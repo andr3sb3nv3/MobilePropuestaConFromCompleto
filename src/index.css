@@ -45,6 +45,12 @@ body {
   justify-content: center;
 }
 
+.bg-grid {
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                      linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+}
+
 :root {
   --bg-deep: #061936;
   --border: rgba(255, 255, 255, 0.1);
