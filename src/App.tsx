@@ -290,27 +290,25 @@ function VisionCompartidaSection({ customData }: { customData: any }) {
             </div>
           )}
 
-          {customData.img2 && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              className="relative w-full max-w-2xl mx-auto mt-12"
-            >
-              <div 
-                className="absolute inset-0 transform rotate-2 rounded-[3rem] opacity-10" 
-                style={{ backgroundColor: customData.color2 || 'var(--theme-accent)' }}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="relative w-full max-w-2xl mx-auto mt-12"
+          >
+            <div 
+              className="absolute inset-0 transform rotate-2 rounded-[3rem] opacity-10" 
+              style={{ backgroundColor: customData.color2 || 'var(--theme-accent)' }}
+            />
+            <div className="relative rounded-[3rem] overflow-hidden shadow-2xl border-4 border-white bg-white p-2">
+              <img 
+                src={customData.img2 || "https://raw.githubusercontent.com/andr3sb3nv3/Banco-de-im-genes-Atenea/refs/heads/main/A6B64836-DEA7-4039-A9FA-1223B424ED8F.png"} 
+                alt="Empresa" 
+                className="w-full h-auto object-cover aspect-video rounded-[2.5rem]"
+                referrerPolicy="no-referrer"
               />
-              <div className="relative rounded-[3rem] overflow-hidden shadow-2xl border-4 border-white bg-white p-2">
-                <img 
-                  src={customData.img2} 
-                  alt="Empresa" 
-                  className="w-full h-auto object-cover aspect-video rounded-[2.5rem]"
-                  referrerPolicy="no-referrer"
-                />
-              </div>
-            </motion.div>
-          )}
+            </div>
+          </motion.div>
         </motion.div>
       </div>
     </section>
