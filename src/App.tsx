@@ -260,8 +260,7 @@ function VisionCompartidaSection({ customData }: { customData: any }) {
           </div>
           
           <h2 
-            className="text-5xl sm:text-6xl md:text-8xl font-black uppercase tracking-tighter leading-none"
-            style={{ color: customData.color1 || 'var(--theme-primary)' }}
+            className="text-5xl sm:text-6xl md:text-8xl font-black uppercase tracking-tighter leading-none text-black"
           >
             {customData.companyName || 'Tu Empresa'}
           </h2>
@@ -269,8 +268,7 @@ function VisionCompartidaSection({ customData }: { customData: any }) {
           {customData.text && (
             <div className="relative max-w-3xl mx-auto">
               <p 
-                className="text-2xl md:text-4xl font-light leading-tight italic opacity-90"
-                style={{ color: customData.color1 || 'var(--theme-primary)' }}
+                className="text-2xl md:text-4xl font-light leading-tight italic opacity-90 text-black"
               >
                 "{customData.text}"
               </p>
@@ -759,16 +757,16 @@ export default function App() {
       {customData && <VisionCompartidaSection customData={customData} />}
 
       {/* SECCIÓN 2: EL CONTEXTO */}
-      <section className="relative w-full min-h-[100dvh] bg-[#e0e5ec] py-8 md:py-16 flex flex-col justify-center border-b border-gray-200 overflow-hidden">
-        <div className="container mx-auto px-4 sm:px-6 md:px-20 lg:px-32 max-w-6xl flex flex-col h-full justify-evenly">
+      <section className="relative w-full min-h-[100dvh] bg-[#e0e5ec] py-12 md:py-16 flex flex-col border-b border-gray-200 overflow-hidden">
+        <div className="container mx-auto px-4 sm:px-6 md:px-20 lg:px-32 max-w-6xl flex flex-col flex-1 justify-evenly">
           <motion.div 
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
             variants={fadeInUp}
-            className="mb-6 md:mb-12 text-center md:text-left"
+            className="text-center md:text-left"
           >
-            <h2 className="text-3xl sm:text-4xl md:text-7xl font-black tracking-tight text-slate-700 drop-shadow-sm uppercase">El contexto</h2>
+            <h2 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tight text-slate-700 drop-shadow-sm uppercase">El contexto</h2>
           </motion.div>
 
           <motion.div 
@@ -778,30 +776,30 @@ export default function App() {
             variants={staggerContainer}
             className="space-y-4 md:space-y-8"
           >
-            <motion.div variants={fadeInUp} className="flex flex-row items-center md:items-start space-x-3 md:space-x-8 bg-[#e0e5ec] p-4 md:p-8 rounded-3xl shadow-[8px_8px_16px_#a3b1c6,-8px_-8px_16px_#ffffff]">
-              <div className="bg-[#e0e5ec] p-3 md:p-5 rounded-2xl flex-shrink-0 shadow-[inset_4px_4px_8px_#a3b1c6,inset_-4px_-4px_8px_#ffffff]">
-                <Timer className="w-6 h-6 md:w-10 md:h-10 text-brand-accent" />
+            <motion.div variants={fadeInUp} className="flex flex-row items-center md:items-start space-x-4 md:space-x-8 bg-[#e0e5ec] p-5 md:p-8 rounded-3xl shadow-[8px_8px_16px_#a3b1c6,-8px_-8px_16px_#ffffff]">
+              <div className="bg-[#e0e5ec] p-3.5 md:p-5 rounded-2xl flex-shrink-0 shadow-[inset_4px_4px_8px_#a3b1c6,inset_-4px_-4px_8px_#ffffff]">
+                <Timer className="w-7 h-7 md:w-10 md:h-10 text-brand-accent" />
               </div>
               <div className="flex-1 uppercase tracking-tight">
-                <p className="text-[11px] sm:text-sm md:text-xl lg:text-2xl text-slate-600 leading-snug md:leading-relaxed mb-1 md:mb-2 font-medium">El sector inmobiliario pierde leads por tiempos de respuesta lentos.</p>
-                <p className="text-[11px] sm:text-sm md:text-xl lg:text-2xl text-brand-accent font-black drop-shadow-sm">Responder en 5 min convierte 100x más que en 30.</p>
+                <p className="text-sm sm:text-base md:text-xl lg:text-2xl text-slate-600 leading-snug md:leading-relaxed mb-1 md:mb-2 font-medium">El sector inmobiliario pierde leads por tiempos de respuesta lentos.</p>
+                <p className="text-sm sm:text-base md:text-xl lg:text-2xl text-brand-accent font-black drop-shadow-sm">Responder en 5 min convierte 100x más que en 30.</p>
               </div>
             </motion.div>
 
-            <motion.div variants={fadeInUp} className="flex flex-row items-center md:items-start space-x-3 md:space-x-8 bg-[#e0e5ec] p-4 md:p-8 rounded-3xl shadow-[8px_8px_16px_#a3b1c6,-8px_-8px_16px_#ffffff]">
-              <div className="bg-[#e0e5ec] p-3 md:p-5 rounded-2xl flex-shrink-0 shadow-[inset_4px_4px_8px_#a3b1c6,inset_-4px_-4px_8px_#ffffff]">
-                <UserX className="w-6 h-6 md:w-10 md:h-10 text-rose-400" />
+            <motion.div variants={fadeInUp} className="flex flex-row items-center md:items-start space-x-4 md:space-x-8 bg-[#e0e5ec] p-5 md:p-8 rounded-3xl shadow-[8px_8px_16px_#a3b1c6,-8px_-8px_16px_#ffffff]">
+              <div className="bg-[#e0e5ec] p-3.5 md:p-5 rounded-2xl flex-shrink-0 shadow-[inset_4px_4px_8px_#a3b1c6,inset_-4px_-4px_8px_#ffffff]">
+                <UserX className="w-7 h-7 md:w-10 md:h-10 text-rose-400" />
               </div>
-              <div className="flex-1 text-[11px] sm:text-sm md:text-xl lg:text-2xl text-slate-600 leading-snug md:leading-relaxed uppercase tracking-tight font-medium">
+              <div className="flex-1 text-sm sm:text-base md:text-xl lg:text-2xl text-slate-600 leading-snug md:leading-relaxed uppercase tracking-tight font-medium">
                 <p>Los formularios y chatbots tradicionales destruyen conversión: no califican, ni actualizan el CRM.</p>
               </div>
             </motion.div>
 
-            <motion.div variants={fadeInUp} className="flex flex-row items-center md:items-start space-x-3 md:space-x-8 bg-[#e0e5ec] p-4 md:p-8 rounded-3xl shadow-[8px_8px_16px_#a3b1c6,-8px_-8px_16px_#ffffff]">
-              <div className="bg-[#e0e5ec] p-3 md:p-5 rounded-2xl flex-shrink-0 shadow-[inset_4px_4px_8px_#a3b1c6,inset_-4px_-4px_8px_#ffffff]">
-                <Target className="w-6 h-6 md:w-10 md:h-10 text-blue-500" />
+            <motion.div variants={fadeInUp} className="flex flex-row items-center md:items-start space-x-4 md:space-x-8 bg-[#e0e5ec] p-5 md:p-8 rounded-3xl shadow-[8px_8px_16px_#a3b1c6,-8px_-8px_16px_#ffffff]">
+              <div className="bg-[#e0e5ec] p-3.5 md:p-5 rounded-2xl flex-shrink-0 shadow-[inset_4px_4px_8px_#a3b1c6,inset_-4px_-4px_8px_#ffffff]">
+                <Target className="w-7 h-7 md:w-10 md:h-10 text-blue-500" />
               </div>
-              <div className="flex-1 text-[11px] sm:text-sm md:text-xl lg:text-2xl text-slate-700 leading-snug md:leading-relaxed uppercase tracking-tight font-black">
+              <div className="flex-1 text-sm sm:text-base md:text-xl lg:text-2xl text-slate-700 leading-snug md:leading-relaxed uppercase tracking-tight font-black">
                 <p>{customData?.companyName ? `${customData.companyName} necesita` : 'Las inmobiliarias necesitan'}: velocidad + calificación real + CRM en tiempo real.</p>
               </div>
             </motion.div>
@@ -825,10 +823,10 @@ export default function App() {
             </h2>
           </motion.div>
 
-          <div className={`rounded-[2rem] md:rounded-[3rem] p-6 sm:p-8 md:p-10 relative overflow-hidden transition-all duration-500 ${selectedAllianceTab === 'patagon' ? 'bg-[#edd5b1] shadow-[12px_12px_24px_#c9b596,-12px_-12px_24px_#ffffff]' : 'bg-brand-primary shadow-[12px_12px_24px_rgba(0,0,0,0.5),-12px_-12px_24px_rgba(255,255,255,0.05)]'}`}>
+          <div className={`rounded-[2rem] md:rounded-[3rem] p-6 sm:p-8 md:p-10 relative overflow-hidden transition-all duration-500 ${selectedAllianceTab === 'patagon' ? 'bg-[#edd5b1] shadow-none' : 'bg-brand-primary shadow-[12px_12px_24px_rgba(0,0,0,0.5),-12px_-12px_24px_rgba(255,255,255,0.05)]'}`}>
             {/* Tab Selector */}
             <div className="flex justify-center mb-4 w-full overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-              <div className={`${selectedAllianceTab === 'patagon' ? 'bg-[#edd5b1] shadow-[inset_6px_6px_12px_#c9b596,inset_-6px_-6px_12px_#ffffff]' : 'bg-brand-primary shadow-[inset_6px_6px_12px_rgba(0,0,0,0.5),inset_-6px_-6px_12px_rgba(255,255,255,0.05)]'} p-1.5 rounded-full flex flex-row gap-1 md:gap-2 relative min-w-max transition-colors duration-500`}>
+              <div className={`${selectedAllianceTab === 'patagon' ? 'bg-[#edd5b1] shadow-none' : 'bg-brand-primary shadow-[inset_6px_6px_12px_rgba(0,0,0,0.5),inset_-6px_-6px_12px_rgba(255,255,255,0.05)]'} p-1.5 rounded-full flex flex-row gap-1 md:gap-2 relative min-w-max transition-colors duration-500`}>
                 {allianceRoles.map((role) => (
                   <button
                     key={role.id}
@@ -836,7 +834,7 @@ export default function App() {
                     className={`relative px-4 py-2.5 md:px-10 md:py-4 rounded-full text-[10px] sm:text-xs md:text-sm font-bold uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-1.5 md:gap-2 whitespace-nowrap ${
                       selectedAllianceTab === role.id
                         ? selectedAllianceTab === 'patagon'
-                          ? 'bg-[#edd5b1] text-brand-primary shadow-[4px_4px_8px_#c9b596,-4px_-4px_8px_#ffffff]'
+                          ? 'bg-[#edd5b1] text-brand-primary shadow-none'
                           : 'bg-brand-accent text-brand-primary shadow-[4px_4px_8px_rgba(0,0,0,0.3),-4px_-4px_8px_rgba(255,255,255,0.2)]'
                         : selectedAllianceTab === 'patagon' ? 'text-black/60 hover:text-black' : 'text-slate-400 hover:text-white drop-shadow-[0_0_5px_rgba(255,255,255,0.3)]'
                     }`}
@@ -1054,31 +1052,6 @@ export default function App() {
             </div>
         </div>
       </motion.section>
-
-      <div className="marquee-bar">
-        <div className="marquee-row">
-          {/* Se duplica el array para crear el efecto de scroll infinito sin cortes */}
-          {[...Array(2)].map((_, i) => (
-            <React.Fragment key={i}>
-              {[
-                "Meta Ads", 
-                "Google Ads", 
-                "Mercado Libre Ads", 
-                "TikTok Ads", 
-                "Performance Marketing", 
-                "ROAS Optimization", 
-                "Full-Funnel Attribution", 
-                "Creative Testing"
-              ].map((item) => (
-                <span key={item} className="m-item">
-                  {item}
-                  <span className="m-sep">✦</span>
-                </span>
-              ))}
-            </React.Fragment>
-          ))}
-        </div>
-      </div>
 
       {/* SECCIÓN 8.5: PLAN DE ESCALAMIENTO */}
       <PlanEscalamiento customData={customData} />
